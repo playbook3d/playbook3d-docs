@@ -1,24 +1,35 @@
 {
   "$schema": "https://mintlify.com/schema.json",
-  "name": "Starter Kit",
+  "name": "Playbook Docs",
   "logo": {
     "dark": "/logo/dark.svg",
     "light": "/logo/light.svg"
   },
   "favicon": "/favicon.svg",
+  "theme" : "prism",
+  "background": {
+    "style": "gradient"
+  },
+  "modeToggle": {
+    "default": "dark",
+    "isHidden": true
+  },
+  "codeBlock": {
+    "mode": "dark"
+  },
   "colors": {
-    "primary": "#0D9373",
-    "light": "#07C983",
-    "dark": "#0D9373",
+    "primary": "#7DE5BA",
+    "light": "#7DE5BA",
+    "dark": "#7DE5BA",
     "anchors": {
-      "from": "#0D9373",
-      "to": "#07C983"
+      "from": "#B6FFFF",
+      "to": "#7DE5BA"
     }
   },
   "topbarLinks": [
     {
       "name": "Support",
-      "url": "mailto:hi@mintlify.com"
+      "url": "mailto:support@playbook3d.com"
     }
   ],
   "topbarCtaButton": {

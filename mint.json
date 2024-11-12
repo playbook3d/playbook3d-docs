@@ -7,6 +7,7 @@
   },
   "favicon": "/favicon.svg",
   "theme" : "prism",
+  "layout": "topnav",
   "background": {
     "style": "gradient"
   },
@@ -34,9 +35,21 @@
   ],
   "topbarCtaButton": {
     "name": "Dashboard",
-    "url": "https://dashboard.mintlify.com"
+    "url": "https:/beta.playbook3d.com"
   },
   "tabs": [
+    {
+      "name": "Product Guides",
+      "url": "product-guides"
+    },
+    {
+      "name": "Developer Guides",
+      "url": "developer-guides"
+    },
+    {
+      "name": "SDKs & Libraries",
+      "url": "sdks-&-libraries"
+    },
     {
       "name": "API Reference",
       "url": "api-reference"
@@ -44,59 +57,52 @@
   ],
   "anchors": [
     {
-      "name": "Documentation",
-      "icon": "book-open-cover",
-      "url": "https://mintlify.com/docs"
+      "name": "GitHub",
+      "icon": "github",
+      "url": "https://github.com/playbook3d"
     },
     {
       "name": "Community",
-      "icon": "slack",
-      "url": "https://mintlify.com/community"
-    },
-    {
-      "name": "Blog",
-      "icon": "newspaper",
-      "url": "https://mintlify.com/blog"
+      "icon": "discord",
+      "url": "https://discord.gg/FDFEa836Pc"
     }
   ],
   "navigation": [
     {
-      "group": "Get Started",
+      "group": "Product Guides",
       "pages": [
-        "introduction",
-        "quickstart",
-        "development"
+        "product-guides/introduction",
+        "product-guides/quickstart"
       ]
     },
     {
-      "group": "Essentials",
+      "group": "Plugins",
       "pages": [
-        "essentials/markdown",
-        "essentials/code",
-        "essentials/images",
-        "essentials/settings",
-        "essentials/navigation",
-        "essentials/reusable-snippets"
+        "product-guides/introduction"
       ]
     },
     {
-      "group": "API Documentation",
+      "group": "Developer Guides",
+      "pages": [
+        "developer-guides/introduction"
+      ]
+    },
+    {
+      "group": "SDKs & Libraries",
+      "pages": [
+        "sdks-&-libraries/introduction"
+      ]
+    },
+    {
+      "group": "API Reference",
       "pages": [
         "api-reference/introduction"
-      ]
-    },
-    {
-      "group": "Endpoint Examples",
-      "pages": [
-        "api-reference/endpoint/get",
-        "api-reference/endpoint/create",
-        "api-reference/endpoint/delete"
       ]
     }
   ],
   "footerSocials": {
-    "x": "https://x.com/mintlify",
-    "github": "https://github.com/mintlify",
-    "linkedin": "https://linkedin.com/company/mintlify"
+    "x": "https://x.com/playbook3d",
+    "github": "https://github.com/playbook3d",
+    "linkedin": "https://www.linkedin.com/company/playbook3d/"
   }
 }

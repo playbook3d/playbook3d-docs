@@ -72,13 +72,15 @@
       "group": "Product Guides",
       "pages": [
         "product-guides/introduction",
-        "product-guides/quickstart"
+        "product-guides/subscription-plans"
       ]
     },
     {
       "group": "Plugins",
       "pages": [
-        "product-guides/introduction"
+        "product-guides/integrations/blender",
+        "product-guides/integrations/houdini",
+        "product-guides/integrations/unity"
       ]
     },
     {

@@ -39,8 +39,8 @@
   },
   "tabs": [
     {
-      "name": "Product Guides",
-      "url": "product-guides"
+      "name": "Get Started",
+      "url": "get-started"
     },
     {
       "name": "Developer Guides",
@@ -69,18 +69,18 @@
   ],
   "navigation": [
     {
-      "group": "Product Guides",
+      "group": "Get Started",
       "pages": [
-        "product-guides/introduction",
-        "product-guides/subscription-plans"
+        "get-started/introduction",
+        "get-started/subscription-plans"
       ]
     },
     {
       "group": "Integrations",
       "pages": [
-        "product-guides/integrations/blender",
-        "product-guides/integrations/houdini",
-        "product-guides/integrations/unity"
+        "get-started/integrations/blender",
+        "get-started/integrations/houdini",
+        "get-started/integrations/unity"
       ]
     },
     {

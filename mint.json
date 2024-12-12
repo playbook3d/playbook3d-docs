@@ -39,16 +39,8 @@
   },
   "tabs": [
     {
-      "name": "Get Started",
-      "url": "get-started"
-    },
-    {
-      "name": "Developer Guides",
-      "url": "developer-guides"
-    },
-    {
-      "name": "SDKs & Libraries",
-      "url": "sdks-&-libraries"
+      "name": "Platform",
+      "url": "platform"
     },
     {
       "name": "API Reference",
@@ -71,28 +63,15 @@
     {
       "group": "Get Started",
       "pages": [
-        "get-started/introduction",
-        "get-started/subscription-plans"
+        "platform/get-started/introduction",
+        "platform/get-started/subscription-plans"
       ]
     },
     {
       "group": "Integrations",
       "pages": [
-        "get-started/integrations/blender",
-        "get-started/integrations/houdini",
-        "get-started/integrations/unity"
-      ]
-    },
-    {
-      "group": "Developer Guides",
-      "pages": [
-        "developer-guides/introduction"
-      ]
-    },
-    {
-      "group": "SDKs & Libraries",
-      "pages": [
-        "sdks-&-libraries/introduction"
+        "platform/integrations/blender",
+        "platform/integrations/houdini"
       ]
     },
     {

@@ -75,9 +75,16 @@
       ]
     },
     {
+      "group": "API Reference",
+      "pages": [
+        "api-reference/introduction"
+      ]
+    },
+    {
       "group": "SDK Libraries",
       "pages": [
         "api-reference/sdk-python",
+        "api-reference/sdk-js",
         "api-reference/sdk-unity"
       ]
     },

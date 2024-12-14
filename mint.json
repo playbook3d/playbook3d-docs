@@ -83,16 +83,33 @@
     {
       "group": "SDK Libraries",
       "pages": [
-        "api-reference/sdk-python",
-        "api-reference/sdk-js",
-        "api-reference/sdk-unity"
+        "api-reference/sdk-libraries/sdk-python",
+        "api-reference/sdk-libraries/sdk-js",
+        "api-reference/sdk-libraries/sdk-unity"
       ]
     },
     {
-      "group": "Files",
+      "group": "Get Started",
       "pages": [
-        "api-reference/files/get",
-        "api-reference/files/post"
+        "api-reference/get-started/installation",
+        "api-reference/get-started/authentication",
+        "api-reference/get-started/errors"
+      ]
+    },
+    {
+      "group": "Workflows",
+      "pages": [
+        "api-reference/workflows/create-workflows",
+        "api-reference/workflows/delete-workflows",
+        "api-reference/workflows/get-workflows",
+        "api-reference/workflows/update-workflows"
+      ]
+    },
+    {
+      "group": "Run",
+      "pages": [
+        "api-reference/run/run-workflow",
+        "api-reference/run/websocket"
       ]
     }
   ],

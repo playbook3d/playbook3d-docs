@@ -89,26 +89,26 @@
       ]
     },
     {
-      "group": "Get Started",
+      "group": "Teams",
       "pages": [
-        "api-reference/get-started/installation",
-        "api-reference/get-started/authentication",
-        "api-reference/get-started/errors"
+        "api-reference/teams/get-teams",
+        "api-reference/teams/get-teams-team_id"
       ]
     },
     {
       "group": "Workflows",
       "pages": [
-        "api-reference/workflows/create-workflows",
-        "api-reference/workflows/delete-workflows",
+        "api-reference/workflows/post-workflows",
+        "api-reference/workflows/delete-workflows-workflow_id",
         "api-reference/workflows/get-workflows",
-        "api-reference/workflows/update-workflows"
+        "api-reference/workflows/get-workflows-workflow_id",
+        "api-reference/workflows/patch-workflows-workflow_id"
       ]
     },
     {
       "group": "Run",
       "pages": [
-        "api-reference/run/run-workflow",
+        "api-reference/run/run-workflow-team_id",
         "api-reference/run/websocket"
       ]
     }

@@ -6,7 +6,7 @@
     "light": "/logo/light.svg"
   },
   "favicon": "/favicon.svg",
-  "theme" : "prism",
+  "theme": "prism",
   "layout": "topnav",
   "background": {
     "style": "gradient"
@@ -76,9 +76,7 @@
     },
     {
       "group": "API Reference",
-      "pages": [
-        "api-reference/overview"
-      ]
+      "pages": ["api-reference/overview"]
     },
     {
       "group": "SDK Libraries",

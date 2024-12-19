@@ -1,670 +1,656 @@
 {
-	"openapi": "3.1.0",
-	"info": {
-		"title": "Playbook API Documentation",
-		"description": "This is the documentation for the Playbook API. You can use this API to use our service programmatically, this is done by using your API key. <br/> You can view your API key using the 'User' tab on https://beta.playbook3d.com/.",
-		"version": "1.0"
-	},
-	"paths": {
-		"/template": { 
-			"post": {
-				"tags": [
-					"text-to-speech"
-				],
-				"summary": "Text To Speech",
-				"description": "Converts text into speech using a voice of your choice and returns audio.",
-				"operationId": "Text_to_speech_v1_text_to_speech__voice_id__post",
-				"parameters": [
-					{
-						"description": "Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.",
-						"required": true,
-						"schema": {
-							"type": "string",
-							"title": "Voice Id",
-							"description": "Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices."
-						},
-						"example": "21m00Tcm4TlvDq8ikWAM",
-						"name": "voice_id",
-						"in": "path"
-					},
-					{
-						"description": "When enable_logging is set to false full privacy mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Full privacy mode may only be used by enterprise customers.",
-						"required": false,
-						"schema": {
-							"type": "boolean",
-							"title": "Enable request logging.",
-							"description": "When enable_logging is set to false full privacy mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Full privacy mode may only be used by enterprise customers.",
-							"default": true
-						},
-						"name": "enable_logging",
-						"in": "query"
-					},
-					{
-						"description": "You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model. Possible values:\n0 - default mode (no latency optimizations)\n1 - normal latency optimizations (about 50% of possible latency improvement of option 3)\n2 - strong latency optimizations (about 75% of possible latency improvement of option 3)\n3 - max latency optimizations\n4 - max latency optimizations, but also with text normalizer turned off for even more latency savings (best latency, but can mispronounce eg numbers and dates).\n\nDefaults to None.\n",
-						"required": false,
-						"deprecated": true,
-						"schema": {
-							"type": "integer",
-							"title": "DEPRECATED. How much we should optimize streaming request latency (time to first audio byte).",
-							"description": "You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model. Possible values:\n0 - default mode (no latency optimizations)\n1 - normal latency optimizations (about 50% of possible latency improvement of option 3)\n2 - strong latency optimizations (about 75% of possible latency improvement of option 3)\n3 - max latency optimizations\n4 - max latency optimizations, but also with text normalizer turned off for even more latency savings (best latency, but can mispronounce eg numbers and dates).\n\nDefaults to None.\n"
-						},
-						"name": "optimize_streaming_latency",
-						"in": "query"
-					},
-					{
-						"description": "Output format of the generated audio. Must be one of:\nmp3_22050_32 - output format, mp3 with 22.05kHz sample rate at 32kbps.\nmp3_44100_32 - output format, mp3 with 44.1kHz sample rate at 32kbps.\nmp3_44100_64 - output format, mp3 with 44.1kHz sample rate at 64kbps.\nmp3_44100_96 - output format, mp3 with 44.1kHz sample rate at 96kbps.\nmp3_44100_128 - default output format, mp3 with 44.1kHz sample rate at 128kbps.\nmp3_44100_192 - output format, mp3 with 44.1kHz sample rate at 192kbps. Requires you to be subscribed to Creator tier or above.\npcm_16000 - PCM format (S16LE) with 16kHz sample rate.\npcm_22050 - PCM format (S16LE) with 22.05kHz sample rate.\npcm_24000 - PCM format (S16LE) with 24kHz sample rate.\npcm_44100 - PCM format (S16LE) with 44.1kHz sample rate. Requires you to be subscribed to Pro tier or above.\nulaw_8000 - μ-law format (sometimes written mu-law, often approximated as u-law) with 8kHz sample rate. Note that this format is commonly used for Twilio audio inputs.\n",
-						"required": false,
-						"schema": {
-							"type": "string",
-							"title": "Output format of the generated audio.",
-							"description": "Output format of the generated audio. Must be one of:\nmp3_22050_32 - output format, mp3 with 22.05kHz sample rate at 32kbps.\nmp3_44100_32 - output format, mp3 with 44.1kHz sample rate at 32kbps.\nmp3_44100_64 - output format, mp3 with 44.1kHz sample rate at 64kbps.\nmp3_44100_96 - output format, mp3 with 44.1kHz sample rate at 96kbps.\nmp3_44100_128 - default output format, mp3 with 44.1kHz sample rate at 128kbps.\nmp3_44100_192 - output format, mp3 with 44.1kHz sample rate at 192kbps. Requires you to be subscribed to Creator tier or above.\npcm_16000 - PCM format (S16LE) with 16kHz sample rate.\npcm_22050 - PCM format (S16LE) with 22.05kHz sample rate.\npcm_24000 - PCM format (S16LE) with 24kHz sample rate.\npcm_44100 - PCM format (S16LE) with 44.1kHz sample rate. Requires you to be subscribed to Pro tier or above.\nulaw_8000 - μ-law format (sometimes written mu-law, often approximated as u-law) with 8kHz sample rate. Note that this format is commonly used for Twilio audio inputs.\n",
-							"default": "mp3_44100_128"
-						},
-						"name": "output_format",
-						"in": "query"
-					},
-					{
-						"description": "Your API key. This is required by most endpoints to access our API programatically. You can view your xi-api-key using the 'Profile' tab on the website.",
-						"required": false,
-						"schema": {
-							"type": "string",
-							"title": "Xi-Api-Key",
-							"description": "Your API key. This is required by most endpoints to access our API programatically. You can view your xi-api-key using the 'Profile' tab on the website."
-						},
-						"name": "xi-api-key",
-						"in": "header"
-					}
-				],
-				"requestBody": {
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/Body_Text_to_speech_v1_text_to_speech__voice_id__post"
-							}
-						}
-					},
-					"required": true
-				},
-				"responses": {
-					"200": {
-						"description": "Successful Response",
-						"content": {
-							"audio/mpeg": {}
-						}
-					},
-					"422": {
-						"description": "Validation Error",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/HTTPValidationError"
-								}
-							}
-						}
-					}
-				},
-				"x-codeSamples": [
-					{
-						"lang": "Python",
-						"source": "from elevenlabs import ElevenLabs\n\nclient = ElevenLabs(\n    api_key=\"YOUR_API_KEY\",\n)\nclient.text_to_speech.convert(\n    voice_id=\"21m00Tcm4TlvDq8ikWAM\",\n    model_id=\"eleven_multilingual_v2\",\n    text=\"Hello! 你好! Hola! नमस्ते! Bonjour! こんにちは! مرحبا! 안녕하세요! Ciao! Cześć! Привіт! வணக்கம்!\",\n)\n"
-					},
-					{
-						"lang": "JavaScript",
-						"source": "import { ElevenLabsClient } from \"elevenlabs\";\n\nconst client = new ElevenLabsClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.textToSpeech.convert(\"21m00Tcm4TlvDq8ikWAM\", {\n    model_id: \"eleven_multilingual_v2\",\n    text: \"Hello! 你好! Hola! नमस्ते! Bonjour! こんにちは! مرحبا! 안녕하세요! Ciao! Cześć! Привіт! வணக்கம்!\"\n});\n"
-					},
-					{
-						"lang": "cURL",
-						"source": "curl --request POST \\\n  --url https://api.elevenlabs.io/v1/text-to-speech/21m00Tcm4TlvDq8ikWAM \\\n  --header 'xi-api-key: YOUR_API_KEY' \\\n  --header 'Content-Type: application/json' \\\n  --data '{\n    \"text\": \"Hello! 你好! Hola! नमस्ते! Bonjour! こんにちは! مرحبا! 안녕하세요! Ciao! Cześć! Привіт! வணக்கம்!\",\n    \"model_id\": \"eleven_multilingual_v2\"\n  }'"
-					}
-				]
-			}
-		},
-		"/run-workflow/{team_id}": {
-			"post": {
-				"tags": [
-					"run-workflow"
-				],
-				"summary": "Run Workflow",
-				"description": "Runs specified workflow.",
-				"operationId": "run_workflow",
-				"parameters": [
-					{
-						"description": "Your API key. This is required by most endpoints to access our API programatically. You can view your x-api-key using the 'Profile' tab on the website.",
-						"required": false,
-						"schema": {
-							"type": "string",
-							"title": "X-Api-Key",
-							"description": "Your API key. This is required by most endpoints to access our API programatically. You can view your x-api-key using the 'Profile' tab on the website."
-						},
-						"name": "x-api-key",
-						"in": "header"
-					}
-				],
-				"requestBody": {
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/run_workflow_post"
-							}
-						}
-					},
-					"required": true
-				},
-				"responses": {
-					"200": {
-						"description": "Successful Response",
-						"content": {
-							"audio/mpeg": {}
-						}
-					},
-					"422": {
-						"description": "Validation Error",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/HTTPValidationError"
-								}
-							}
-						}
-					}
-				},
-				"x-codeSamples": [
-					{
-						"lang": "Python",
-						"source": ""
-					},
-					{
-						"lang": "JavaScript",
-						"source": ""
-					},
-					{
-						"lang": "C#",
-						"source": ""
-					}
-				]
-			}
-		},
-		"/workflows/{workflow_id}": {
-			"get": {
-				"tags": [
-					"run-workflow"
-				],
-				"summary": "Run Workflow",
-				"description": "Runs specified workflow.",
-				"operationId": "run_workflow",
-				"parameters": [
-					{
-						"description": "Your API key. This is required by most endpoints to access our API programatically. You can view your x-api-key using the 'Profile' tab on the website.",
-						"required": false,
-						"schema": {
-							"type": "string",
-							"title": "X-Api-Key",
-							"description": "Your API key. This is required by most endpoints to access our API programatically. You can view your x-api-key using the 'Profile' tab on the website."
-						},
-						"name": "x-api-key",
-						"in": "header"
-					}
-				],
-				"requestBody": {
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/run_workflow_post"
-							}
-						}
-					},
-					"required": true
-				},
-				"responses": {
-					"200": {
-						"description": "Successful Response",
-						"content": {
-							"audio/mpeg": {}
-						}
-					},
-					"422": {
-						"description": "Validation Error",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/HTTPValidationError"
-								}
-							}
-						}
-					}
-				},
-				"x-codeSamples": [
-					{
-						"lang": "Python",
-						"source": ""
-					},
-					{
-						"lang": "JavaScript",
-						"source": ""
-					},
-					{
-						"lang": "C#",
-						"source": ""
-					}
-				]
-			},
-			"delete": {
-				"tags": [
-					"run-workflow"
-				],
-				"summary": "Run Workflow",
-				"description": "Runs specified workflow.",
-				"operationId": "run_workflow",
-				"parameters": [
-					{
-						"description": "Your API key. This is required by most endpoints to access our API programatically. You can view your x-api-key using the 'Profile' tab on the website.",
-						"required": false,
-						"schema": {
-							"type": "string",
-							"title": "X-Api-Key",
-							"description": "Your API key. This is required by most endpoints to access our API programatically. You can view your x-api-key using the 'Profile' tab on the website."
-						},
-						"name": "x-api-key",
-						"in": "header"
-					}
-				],
-				"requestBody": {
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/run_workflow_post"
-							}
-						}
-					},
-					"required": true
-				},
-				"responses": {
-					"200": {
-						"description": "Successful Response",
-						"content": {
-							"audio/mpeg": {}
-						}
-					},
-					"422": {
-						"description": "Validation Error",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/HTTPValidationError"
-								}
-							}
-						}
-					}
-				},
-				"x-codeSamples": [
-					{
-						"lang": "Python",
-						"source": ""
-					},
-					{
-						"lang": "JavaScript",
-						"source": ""
-					},
-					{
-						"lang": "C#",
-						"source": ""
-					}
-				]
-			},
-			"patch": {
-				"tags": [
-					"run-workflow"
-				],
-				"summary": "Run Workflow",
-				"description": "Runs specified workflow.",
-				"operationId": "run_workflow",
-				"parameters": [
-					{
-						"description": "Your API key. This is required by most endpoints to access our API programatically. You can view your x-api-key using the 'Profile' tab on the website.",
-						"required": false,
-						"schema": {
-							"type": "string",
-							"title": "X-Api-Key",
-							"description": "Your API key. This is required by most endpoints to access our API programatically. You can view your x-api-key using the 'Profile' tab on the website."
-						},
-						"name": "x-api-key",
-						"in": "header"
-					}
-				],
-				"requestBody": {
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/run_workflow_post"
-							}
-						}
-					},
-					"required": true
-				},
-				"responses": {
-					"200": {
-						"description": "Successful Response",
-						"content": {
-							"audio/mpeg": {}
-						}
-					},
-					"422": {
-						"description": "Validation Error",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/HTTPValidationError"
-								}
-							}
-						}
-					}
-				},
-				"x-codeSamples": [
-					{
-						"lang": "Python",
-						"source": ""
-					},
-					{
-						"lang": "JavaScript",
-						"source": ""
-					},
-					{
-						"lang": "C#",
-						"source": ""
-					}
-				]
-			}
-		},
-		"/workflows": {
-			"get": {
-				"tags": [
-					"run-workflow"
-				],
-				"summary": "Run Workflow",
-				"description": "Runs specified workflow.",
-				"operationId": "run_workflow",
-				"parameters": [
-					{
-						"description": "Your API key. This is required by most endpoints to access our API programatically. You can view your x-api-key using the 'Profile' tab on the website.",
-						"required": false,
-						"schema": {
-							"type": "string",
-							"title": "X-Api-Key",
-							"description": "Your API key. This is required by most endpoints to access our API programatically. You can view your x-api-key using the 'Profile' tab on the website."
-						},
-						"name": "x-api-key",
-						"in": "header"
-					}
-				],
-				"requestBody": {
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/run_workflow_post"
-							}
-						}
-					},
-					"required": true
-				},
-				"responses": {
-					"200": {
-						"description": "Successful Response",
-						"content": {
-							"audio/mpeg": {}
-						}
-					},
-					"422": {
-						"description": "Validation Error",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/HTTPValidationError"
-								}
-							}
-						}
-					}
-				},
-				"x-codeSamples": [
-					{
-						"lang": "Python",
-						"source": ""
-					},
-					{
-						"lang": "JavaScript",
-						"source": ""
-					},
-					{
-						"lang": "C#",
-						"source": ""
-					}
-				]
-			},
-			"post": {
-				"tags": [
-					"run-workflow"
-				],
-				"summary": "Run Workflow",
-				"description": "Runs specified workflow.",
-				"operationId": "run_workflow",
-				"parameters": [
-					{
-						"description": "Your API key. This is required by most endpoints to access our API programatically. You can view your x-api-key using the 'Profile' tab on the website.",
-						"required": false,
-						"schema": {
-							"type": "string",
-							"title": "X-Api-Key",
-							"description": "Your API key. This is required by most endpoints to access our API programatically. You can view your x-api-key using the 'Profile' tab on the website."
-						},
-						"name": "x-api-key",
-						"in": "header"
-					}
-				],
-				"requestBody": {
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/run_workflow_post"
-							}
-						}
-					},
-					"required": true
-				},
-				"responses": {
-					"200": {
-						"description": "Successful Response",
-						"content": {
-							"audio/mpeg": {}
-						}
-					},
-					"422": {
-						"description": "Validation Error",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/HTTPValidationError"
-								}
-							}
-						}
-					}
-				},
-				"x-codeSamples": [
-					{
-						"lang": "Python",
-						"source": ""
-					},
-					{
-						"lang": "JavaScript",
-						"source": ""
-					},
-					{
-						"lang": "C#",
-						"source": ""
-					}
-				]
-			}
-		},
-		"/teams": {
-			"get": {
-				"tags": [
-					"run-workflow"
-				],
-				"summary": "Run Workflow",
-				"description": "Runs specified workflow.",
-				"operationId": "run_workflow",
-				"parameters": [
-					{
-						"description": "Your API key. This is required by most endpoints to access our API programatically. You can view your x-api-key using the 'Profile' tab on the website.",
-						"required": false,
-						"schema": {
-							"type": "string",
-							"title": "X-Api-Key",
-							"description": "Your API key. This is required by most endpoints to access our API programatically. You can view your x-api-key using the 'Profile' tab on the website."
-						},
-						"name": "x-api-key",
-						"in": "header"
-					}
-				],
-				"requestBody": {
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/run_workflow_post"
-							}
-						}
-					},
-					"required": true
-				},
-				"responses": {
-					"200": {
-						"description": "Successful Response",
-						"content": {
-							"audio/mpeg": {}
-						}
-					},
-					"422": {
-						"description": "Validation Error",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/HTTPValidationError"
-								}
-							}
-						}
-					}
-				},
-				"x-codeSamples": [
-					{
-						"lang": "Python",
-						"source": ""
-					},
-					{
-						"lang": "JavaScript",
-						"source": ""
-					},
-					{
-						"lang": "C#",
-						"source": ""
-					}
-				]
-			}
-		},
-		"/teams/{team_id}": {
-			"get": {
-				"tags": [
-					"run-workflow"
-				],
-				"summary": "Run Workflow",
-				"description": "Runs specified workflow.",
-				"operationId": "run_workflow",
-				"parameters": [
-					{
-						"description": "Your API key. This is required by most endpoints to access our API programatically. You can view your x-api-key using the 'Profile' tab on the website.",
-						"required": false,
-						"schema": {
-							"type": "string",
-							"title": "X-Api-Key",
-							"description": "Your API key. This is required by most endpoints to access our API programatically. You can view your x-api-key using the 'Profile' tab on the website."
-						},
-						"name": "x-api-key",
-						"in": "header"
-					}
-				],
-				"requestBody": {
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/run_workflow_post"
-							}
-						}
-					},
-					"required": true
-				},
-				"responses": {
-					"200": {
-						"description": "Successful Response",
-						"content": {
-							"audio/mpeg": {}
-						}
-					},
-					"422": {
-						"description": "Validation Error",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/HTTPValidationError"
-								}
-							}
-						}
-					}
-				},
-				"x-codeSamples": [
-					{
-						"lang": "Python",
-						"source": ""
-					},
-					{
-						"lang": "JavaScript",
-						"source": ""
-					},
-					{
-						"lang": "C#",
-						"source": ""
-					}
-				]
-			}
-		}
-	},
-	"components": {
-		"schemas": {
-			"HTTPValidationError": {
-				"properties": {
-					"detail": {
-						"items": {
-							"$ref": "#/components/schemas/ValidationError"
-						},
-						"type": "array",
-						"title": "Detail"
-					}
-				},
-				"type": "object",
-				"title": "HTTPValidationError"
-			},
-			"run_workflow_post": {
-			"properties": {
-				"text": {
-					"type": "string",
-					"title": "Text",
-					"description": "The text that will get converted into speech."
-				}
-			},
-			"type": "object",
-			"required": [
-				"text"
-			],
-			"title": "run_workflow__voice_id__post"
-			}
-		}
-	},
-	"tags": [
-	]
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Playbook API Documentation",
+    "description": "This is the documentation for the Playbook API. You can use this API to use our service programmatically, this is done by using your API key. <br/> You can view your API key using the 'User' tab on https://beta.playbook3d.com/.",
+    "version": "1.0"
+  },
+  "paths": {
+    "/template": {
+      "post": {
+        "tags": ["text-to-speech"],
+        "summary": "Text To Speech",
+        "description": "Converts text into speech using a voice of your choice and returns audio.",
+        "operationId": "Text_to_speech_v1_text_to_speech__voice_id__post",
+        "parameters": [
+          {
+            "description": "Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Voice Id",
+              "description": "Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices."
+            },
+            "example": "21m00Tcm4TlvDq8ikWAM",
+            "name": "voice_id",
+            "in": "path"
+          },
+          {
+            "description": "When enable_logging is set to false full privacy mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Full privacy mode may only be used by enterprise customers.",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "title": "Enable request logging.",
+              "description": "When enable_logging is set to false full privacy mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Full privacy mode may only be used by enterprise customers.",
+              "default": true
+            },
+            "name": "enable_logging",
+            "in": "query"
+          },
+          {
+            "description": "You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model. Possible values:\n0 - default mode (no latency optimizations)\n1 - normal latency optimizations (about 50% of possible latency improvement of option 3)\n2 - strong latency optimizations (about 75% of possible latency improvement of option 3)\n3 - max latency optimizations\n4 - max latency optimizations, but also with text normalizer turned off for even more latency savings (best latency, but can mispronounce eg numbers and dates).\n\nDefaults to None.\n",
+            "required": false,
+            "deprecated": true,
+            "schema": {
+              "type": "integer",
+              "title": "DEPRECATED. How much we should optimize streaming request latency (time to first audio byte).",
+              "description": "You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model. Possible values:\n0 - default mode (no latency optimizations)\n1 - normal latency optimizations (about 50% of possible latency improvement of option 3)\n2 - strong latency optimizations (about 75% of possible latency improvement of option 3)\n3 - max latency optimizations\n4 - max latency optimizations, but also with text normalizer turned off for even more latency savings (best latency, but can mispronounce eg numbers and dates).\n\nDefaults to None.\n"
+            },
+            "name": "optimize_streaming_latency",
+            "in": "query"
+          },
+          {
+            "description": "Output format of the generated audio. Must be one of:\nmp3_22050_32 - output format, mp3 with 22.05kHz sample rate at 32kbps.\nmp3_44100_32 - output format, mp3 with 44.1kHz sample rate at 32kbps.\nmp3_44100_64 - output format, mp3 with 44.1kHz sample rate at 64kbps.\nmp3_44100_96 - output format, mp3 with 44.1kHz sample rate at 96kbps.\nmp3_44100_128 - default output format, mp3 with 44.1kHz sample rate at 128kbps.\nmp3_44100_192 - output format, mp3 with 44.1kHz sample rate at 192kbps. Requires you to be subscribed to Creator tier or above.\npcm_16000 - PCM format (S16LE) with 16kHz sample rate.\npcm_22050 - PCM format (S16LE) with 22.05kHz sample rate.\npcm_24000 - PCM format (S16LE) with 24kHz sample rate.\npcm_44100 - PCM format (S16LE) with 44.1kHz sample rate. Requires you to be subscribed to Pro tier or above.\nulaw_8000 - μ-law format (sometimes written mu-law, often approximated as u-law) with 8kHz sample rate. Note that this format is commonly used for Twilio audio inputs.\n",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "title": "Output format of the generated audio.",
+              "description": "Output format of the generated audio. Must be one of:\nmp3_22050_32 - output format, mp3 with 22.05kHz sample rate at 32kbps.\nmp3_44100_32 - output format, mp3 with 44.1kHz sample rate at 32kbps.\nmp3_44100_64 - output format, mp3 with 44.1kHz sample rate at 64kbps.\nmp3_44100_96 - output format, mp3 with 44.1kHz sample rate at 96kbps.\nmp3_44100_128 - default output format, mp3 with 44.1kHz sample rate at 128kbps.\nmp3_44100_192 - output format, mp3 with 44.1kHz sample rate at 192kbps. Requires you to be subscribed to Creator tier or above.\npcm_16000 - PCM format (S16LE) with 16kHz sample rate.\npcm_22050 - PCM format (S16LE) with 22.05kHz sample rate.\npcm_24000 - PCM format (S16LE) with 24kHz sample rate.\npcm_44100 - PCM format (S16LE) with 44.1kHz sample rate. Requires you to be subscribed to Pro tier or above.\nulaw_8000 - μ-law format (sometimes written mu-law, often approximated as u-law) with 8kHz sample rate. Note that this format is commonly used for Twilio audio inputs.\n",
+              "default": "mp3_44100_128"
+            },
+            "name": "output_format",
+            "in": "query"
+          },
+          {
+            "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your xi-api-key using the 'Profile' tab on the website.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "title": "Xi-Api-Key",
+              "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your xi-api-key using the 'Profile' tab on the website."
+            },
+            "name": "xi-api-key",
+            "in": "header"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_Text_to_speech_v1_text_to_speech__voice_id__post"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "audio/mpeg": {}
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Python",
+            "source": "from elevenlabs import ElevenLabs\n\nclient = ElevenLabs(\n    api_key=\"YOUR_API_KEY\",\n)\nclient.text_to_speech.convert(\n    voice_id=\"21m00Tcm4TlvDq8ikWAM\",\n    model_id=\"eleven_multilingual_v2\",\n    text=\"Hello! 你好! Hola! नमस्ते! Bonjour! こんにちは! مرحبا! 안녕하세요! Ciao! Cześć! Привіт! வணக்கம்!\",\n)\n"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "import { ElevenLabsClient } from \"elevenlabs\";\n\nconst client = new ElevenLabsClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.textToSpeech.convert(\"21m00Tcm4TlvDq8ikWAM\", {\n    model_id: \"eleven_multilingual_v2\",\n    text: \"Hello! 你好! Hola! नमस्ते! Bonjour! こんにちは! مرحبا! 안녕하세요! Ciao! Cześć! Привіт! வணக்கம்!\"\n});\n"
+          },
+          {
+            "lang": "cURL",
+            "source": "curl --request POST \\\n  --url https://api.elevenlabs.io/v1/text-to-speech/21m00Tcm4TlvDq8ikWAM \\\n  --header 'xi-api-key: YOUR_API_KEY' \\\n  --header 'Content-Type: application/json' \\\n  --data '{\n    \"text\": \"Hello! 你好! Hola! नमस्ते! Bonjour! こんにちは! مرحبا! 안녕하세요! Ciao! Cześć! Привіт! வணக்கம்!\",\n    \"model_id\": \"eleven_multilingual_v2\"\n  }'"
+          }
+        ]
+      }
+    },
+    "/run-workflow/{team_id}": {
+      "post": {
+        "tags": ["run-workflow"],
+        "summary": "Run Workflow",
+        "description": "Runs specified workflow.",
+        "operationId": "run_workflow",
+        "parameters": [
+          {
+            "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your x-api-key using the 'Profile' tab on the website.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "title": "X-Api-Key",
+              "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your x-api-key using the 'Profile' tab on the website."
+            },
+            "name": "x-api-key",
+            "in": "header"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/run_workflow_post"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "audio/mpeg": {}
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Python",
+            "source": ""
+          },
+          {
+            "lang": "JavaScript",
+            "source": ""
+          },
+          {
+            "lang": "C#",
+            "source": "RunWorkflowProperties data =\n\tnew()\n\t{\n\t\tid = {workflow_id},\n\t\torigin = \"2\",\n\t\tinputs = new { },\n\t};"
+          }
+        ]
+      }
+    },
+    "/workflows/{workflow_id}": {
+      "get": {
+        "tags": ["run-workflow"],
+        "summary": "Run Workflow",
+        "description": "Runs specified workflow.",
+        "operationId": "run_workflow",
+        "parameters": [
+          {
+            "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your x-api-key using the 'Profile' tab on the website.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "title": "X-Api-Key",
+              "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your x-api-key using the 'Profile' tab on the website."
+            },
+            "name": "x-api-key",
+            "in": "header"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/run_workflow_post"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "audio/mpeg": {}
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Python",
+            "source": ""
+          },
+          {
+            "lang": "JavaScript",
+            "source": ""
+          },
+          {
+            "lang": "C#",
+            "source": ""
+          }
+        ]
+      },
+      "delete": {
+        "tags": ["run-workflow"],
+        "summary": "Run Workflow",
+        "description": "Runs specified workflow.",
+        "operationId": "run_workflow",
+        "parameters": [
+          {
+            "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your x-api-key using the 'Profile' tab on the website.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "title": "X-Api-Key",
+              "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your x-api-key using the 'Profile' tab on the website."
+            },
+            "name": "x-api-key",
+            "in": "header"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/run_workflow_post"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "audio/mpeg": {}
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Python",
+            "source": ""
+          },
+          {
+            "lang": "JavaScript",
+            "source": ""
+          },
+          {
+            "lang": "C#",
+            "source": ""
+          }
+        ]
+      },
+      "patch": {
+        "tags": ["run-workflow"],
+        "summary": "Run Workflow",
+        "description": "Runs specified workflow.",
+        "operationId": "run_workflow",
+        "parameters": [
+          {
+            "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your x-api-key using the 'Profile' tab on the website.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "title": "X-Api-Key",
+              "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your x-api-key using the 'Profile' tab on the website."
+            },
+            "name": "x-api-key",
+            "in": "header"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/run_workflow_post"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "audio/mpeg": {}
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Python",
+            "source": ""
+          },
+          {
+            "lang": "JavaScript",
+            "source": ""
+          },
+          {
+            "lang": "C#",
+            "source": ""
+          }
+        ]
+      }
+    },
+    "/workflows": {
+      "get": {
+        "tags": ["run-workflow"],
+        "summary": "Run Workflow",
+        "description": "Runs specified workflow.",
+        "operationId": "run_workflow",
+        "parameters": [
+          {
+            "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your x-api-key using the 'Profile' tab on the website.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "title": "X-Api-Key",
+              "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your x-api-key using the 'Profile' tab on the website."
+            },
+            "name": "x-api-key",
+            "in": "header"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/run_workflow_post"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "audio/mpeg": {}
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Python",
+            "source": ""
+          },
+          {
+            "lang": "JavaScript",
+            "source": ""
+          },
+          {
+            "lang": "C#",
+            "source": ""
+          }
+        ]
+      },
+      "post": {
+        "tags": ["run-workflow"],
+        "summary": "Run Workflow",
+        "description": "Runs specified workflow.",
+        "operationId": "run_workflow",
+        "parameters": [
+          {
+            "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your x-api-key using the 'Profile' tab on the website.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "title": "X-Api-Key",
+              "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your x-api-key using the 'Profile' tab on the website."
+            },
+            "name": "x-api-key",
+            "in": "header"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/run_workflow_post"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "audio/mpeg": {}
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Python",
+            "source": ""
+          },
+          {
+            "lang": "JavaScript",
+            "source": ""
+          },
+          {
+            "lang": "C#",
+            "source": ""
+          }
+        ]
+      }
+    },
+    "/teams": {
+      "get": {
+        "tags": ["run-workflow"],
+        "summary": "Run Workflow",
+        "description": "Runs specified workflow.",
+        "operationId": "run_workflow",
+        "parameters": [
+          {
+            "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your x-api-key using the 'Profile' tab on the website.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "title": "X-Api-Key",
+              "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your x-api-key using the 'Profile' tab on the website."
+            },
+            "name": "x-api-key",
+            "in": "header"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/run_workflow_post"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "audio/mpeg": {}
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Python",
+            "source": ""
+          },
+          {
+            "lang": "JavaScript",
+            "source": ""
+          },
+          {
+            "lang": "C#",
+            "source": ""
+          }
+        ]
+      }
+    },
+    "/teams/{team_id}": {
+      "get": {
+        "tags": ["run-workflow"],
+        "summary": "Run Workflow",
+        "description": "Runs specified workflow.",
+        "operationId": "run_workflow",
+        "parameters": [
+          {
+            "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your x-api-key using the 'Profile' tab on the website.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "title": "X-Api-Key",
+              "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your x-api-key using the 'Profile' tab on the website."
+            },
+            "name": "x-api-key",
+            "in": "header"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/run_workflow_post"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "audio/mpeg": {}
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Python",
+            "source": ""
+          },
+          {
+            "lang": "JavaScript",
+            "source": ""
+          },
+          {
+            "lang": "C#",
+            "source": ""
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "run_workflow_post": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The id of the workflow to run."
+          },
+          "origin": {
+            "type": "string",
+            "description": "2 indicates Unity SDK."
+          },
+          "inputs": {
+            "type": "object",
+            "description": ""
+          }
+        },
+        "type": "object",
+        "required": ["id", "origin"],
+        "title": "run_workflow__voice_id__post"
+      }
+    }
+  },
+  "tags": []
 }

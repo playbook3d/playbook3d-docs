@@ -110,3 +110,44 @@ PlaybookSDK.RemoveBackgroundMaskGroup();
   property. `MaskGroup` also includes the "Catch-all" mask, which is the default
   group for objects that are not part of a mask group.
 </Note>
+
+## Overriding Node Inputs
+
+If you would like to manually override node inputs, you can do so by using `OverrideNodeInputs()`
+given in `PlaybookNetwork.cs`.
+
+To call `OverrideNodeInputs()`, you must provide at least 3 parameters:
+
+1. The input dictionary as a reference
+   - The dictionary will already be provided to you in `RunWorkflow()`
+2. The ID of the node you would like to override
+3. The new value of the given node
+4. (Optional) Any trigger words to pass into the given node
+
+```cs
+OverrideNodeInputs(ref inputs, nodeId: "4", value: "Hello World!");
+```
+
+This method should be called before inputs are passed in as `RunWorkflowProperties` in `RunWorkflow()`
+
+```cs
+private IEnumerator RunWorkflow(string accessToken)
+{
+    string url = $"{_apiBaseURL}{RunWorkflowEndpoint}{GetCurrentSelectedWorkflow().team_id}";
+
+    Dictionary<string, object> inputs = new();
+
+    // Add any overrides here
+    OverrideNodeInputs(ref inputs, "4", "Hello World!");
+
+    RunWorkflowProperties data =
+        new()
+        {
+            id = GetCurrentSelectedWorkflow().id,
+            origin = "2",
+            inputs = inputs,
+        };
+
+    ...
+}
+```

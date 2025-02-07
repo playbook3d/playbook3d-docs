@@ -176,6 +176,144 @@
           {
             "lang": "C#",
             "source": "RunWorkflowProperties data =\n\tnew()\n\t{\n\t\tid = {workflow_id},\n\t\torigin = \"2\",\n\t\tinputs = new { },\n\t};"
+          },
+          {
+            "lang": "cURL",
+            "source": "curl -X POST \\\n  -H 'Authorization: Bearer $API_KEY' \\\n  -H 'Content-Type: application/json' \\\n  -H 'Accept: application/json' \\\n  -d '{\"id\": \"workflow_id\", \"origin\": \"2\", \"inputs\": {}}' \\\n  '$BASE_URL/run-workflow/{team_id}'"
+          }
+        ]
+      }
+    },
+    "/get_run_id": {
+      "get": {
+        "tags": ["run-workflow"],
+        "summary": "Run Workflow",
+        "description": "Runs specified workflow.",
+        "operationId": "run_workflow",
+        "parameters": [
+          {
+            "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your x-api-key using the 'Profile' tab on the website.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "title": "X-Api-Key",
+              "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your x-api-key using the 'Profile' tab on the website."
+            },
+            "name": "x-api-key",
+            "in": "header"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/run_workflow_post"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "audio/mpeg": {}
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Python",
+            "source": ""
+          },
+          {
+            "lang": "JavaScript",
+            "source": ""
+          },
+          {
+            "lang": "C#",
+            "source": "RunWorkflowProperties data =\n\tnew()\n\t{\n\t\tid = {workflow_id},\n\t\torigin = \"2\",\n\t\tinputs = new { },\n\t};"
+          },
+          {
+            "lang": "cURL",
+            "source": "curl -X GET \\\n  -H 'Authorization: Bearer $API_KEY' \\\n  -H 'Accept: application/json' \\\n  '$BASE_URL/get_run_id'"
+          }
+        ]
+      }
+    },
+    "/{run_id}/result": {
+      "get": {
+        "tags": ["run-workflow"],
+        "summary": "Run Workflow",
+        "description": "Runs specified workflow.",
+        "operationId": "run_workflow",
+        "parameters": [
+          {
+            "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your x-api-key using the 'Profile' tab on the website.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "title": "X-Api-Key",
+              "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your x-api-key using the 'Profile' tab on the website."
+            },
+            "name": "x-api-key",
+            "in": "header"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/run_workflow_post"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "audio/mpeg": {}
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Python",
+            "source": ""
+          },
+          {
+            "lang": "JavaScript",
+            "source": ""
+          },
+          {
+            "lang": "C#",
+            "source": "RunWorkflowProperties data =\n\tnew()\n\t{\n\t\tid = {workflow_id},\n\t\torigin = \"2\",\n\t\tinputs = new { },\n\t};"
+          },
+          {
+            "lang": "cURL",
+            "source": "curl -X GET \\\n  -H 'Authorization: Bearer $API_KEY' \\\n  -H 'Accept: application/json' \\\n  '$BASE_URL/runs/$run_id/result'"
           }
         ]
       }
@@ -239,6 +377,10 @@
           {
             "lang": "C#",
             "source": ""
+          },
+          {
+            "lang": "cURL",
+            "source": "curl -X GET \\\n  -H 'Authorization: Bearer $API_KEY' \\\n  -H 'Accept: application/json' \\\n  '$BASE_URL/workflows/$workflow_id'"
           }
         ]
       },
@@ -300,6 +442,10 @@
           {
             "lang": "C#",
             "source": ""
+          },
+          {
+            "lang": "cURL",
+            "source": "curl -X DELETE \\\n  -H 'Authorization: Bearer $API_KEY' \\\n  -H 'Accept: application/json' \\\n  '$BASE_URL/workflows/$workflow_id'"
           }
         ]
       },
@@ -361,6 +507,10 @@
           {
             "lang": "C#",
             "source": ""
+          },
+          {
+            "lang": "cURL",
+            "source": "curl -X PATCH \\\n  -H 'Authorization: Bearer $API_KEY' \\\n  -H 'Content-Type: application/json' \\\n  -H 'Accept: application/json' \\\n  -d '{\"id\": \"workflow_id\", \"origin\": \"2\", \"inputs\": {}}' \\\n  '$BASE_URL/workflows/{team_id}'"
           }
         ]
       }
@@ -424,6 +574,10 @@
           {
             "lang": "C#",
             "source": ""
+          },
+          {
+            "lang": "cURL",
+            "source": "curl -X POST \\\n  -H 'Authorization: Bearer $API_KEY' \\\n  -H 'Accept: application/json' \\\n  '$BASE_URL/workflows'"
           }
         ]
       },
@@ -485,6 +639,10 @@
           {
             "lang": "C#",
             "source": ""
+          },
+          {
+            "lang": "cURL",
+            "source": "curl -X POST \\\n  -H 'Authorization: Bearer $API_KEY' \\\n  -H 'Content-Type: application/json' \\\n  -H 'Accept: application/json' \\\n  -d '{\"id\": \"workflow_id\", \"origin\": \"2\", \"inputs\": {}}' \\\n  '$BASE_URL/workflows'"
           }
         ]
       }
@@ -548,6 +706,10 @@
           {
             "lang": "C#",
             "source": ""
+          },
+          {
+            "lang": "cURL",
+            "source": "curl -X GET \\\n  -H 'Authorization: Bearer $API_KEY' \\\n  -H 'Accept: application/json' \\\n  '$BASE_URL/teams'"
           }
         ]
       }
@@ -611,6 +773,10 @@
           {
             "lang": "C#",
             "source": ""
+          },
+          {
+            "lang": "cURL",
+            "source": "curl -X GET \\\n  -H 'Authorization: Bearer $API_KEY' \\\n  -H 'Accept: application/json' \\\n  '$BASE_URL/teams/$team_id'"
           }
         ]
       }

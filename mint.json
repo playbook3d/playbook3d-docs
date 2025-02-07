@@ -107,6 +107,8 @@
       "group": "Run",
       "pages": [
         "api-reference/run/run-workflow-team_id",
+        "api-reference/run/get_run_id",
+        "api-reference/run/get-run-result_id",
         "api-reference/run/websocket"
       ]
     }

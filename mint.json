@@ -87,27 +87,33 @@
       ]
     },
     {
+      "group": "Users",
+      "pages": [
+        "api-reference/users/get-users"
+      ]
+    },
+    {
       "group": "Teams",
       "pages": [
-        "api-reference/teams/get-teams",
-        "api-reference/teams/get-teams-team_id"
+        "api-reference/teams/get-teams"
       ]
     },
     {
       "group": "Workflows",
       "pages": [
-        "api-reference/workflows/post-workflows",
-        "api-reference/workflows/delete-workflows-workflow_id",
-        "api-reference/workflows/get-workflows",
-        "api-reference/workflows/get-workflows-workflow_id",
-        "api-reference/workflows/patch-workflows-workflow_id"
+        "api-reference/workflows/get-workflows"
       ]
     },
     {
-      "group": "Run",
+      "group": "Runs",
       "pages": [
-        "api-reference/run/run-workflow-team_id",
-        "api-reference/run/websocket"
+        "api-reference/runs/get-runs"
+      ]
+    },
+    {
+      "group": "Run Workflows",
+      "pages": [
+        "api-reference/run_workflow/run-workflow-team_id"
       ]
     }
   ],

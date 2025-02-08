@@ -2,3 +2,42 @@
 title: "Python SDK"
 icon: "python"
 ---
+
+Playbook's Python SDK integrates any python application with ComfyUI. It allows you to quickly create images and videos using generative diffusion models.
+
+[Get the Python SDK](https://github.com/playbook3d/playbook3d-python-sdk)
+
+## How To Use Playbook's Python SDK
+<Steps>
+    <Step title="Git clone the sdk">
+        Git clone our repository into your project, <b>Pip install version is coming soon!</b>.
+    </Step>
+
+    <Step title="Import the sdk">
+        Import the sdk into your code with:
+            ```python
+            from playbookNetworkClient import PlaybookClient
+            ```
+    </Step>
+
+    <Step title="Initialize the client">
+        Create an Initialize function and set your api key: <br />
+        ```python
+        def setup_playbook_client(self):
+            self.playbookClient = PlaybookClient()
+            self.playbookClient.set_api_key({"insert your api key here"})
+        ```
+    </Step>
+</Steps>
+
+## Creating a run
+After you pull data from the sdk, you can queue a generation using:
+```python
+self.playbookClient.run_workflow({"Add the PlaybookWorkflow you want to run"})
+```
+
+## Getting your results
+You can either get your results from the [Playbook webclient](https://beta.playbook3d.com) logging in with the same account or by calling:
+```python
+self.playbookClient.get_run_result({"Add the PlaybookRun you're requestin results from"})
+```

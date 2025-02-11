@@ -45,6 +45,10 @@
     {
       "name": "API Reference",
       "url": "api-reference"
+    },
+    {
+      "name": "ComfyUI Nodes",
+      "url": "comfyui-nodes"
     }
   ],
   "anchors": [
@@ -114,6 +118,17 @@
       "group": "Run Workflows",
       "pages": [
         "api-reference/run_workflow/run-workflow-team_id"
+      ]
+    },
+    {
+      "group": "Get Started",
+      "pages": ["comfyui-nodes/overview"]
+    },
+    {
+      "group": "ComfyUI Nodes",
+      "pages": [
+        "comfyui-nodes/comfyui-nodes/playbook-text",
+        "comfyui-nodes/comfyui-nodes/playbook-number"
       ]
     }
   ],

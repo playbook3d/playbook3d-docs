@@ -1,4 +1,30 @@
 ---
 title: "Playbook Text"
-description: ""
+description: "A node that processes text input with optional trigger words."
 ---
+
+## Overview
+
+The **Playbook Text** node allows users to input and manipulate text data within ComfyUI. It supports optional trigger words that can be processed alongside the main text input.
+
+## 🛠️ Node Configuration
+
+### **Inputs**
+| Name            | Type    | Required | Default       | Description                          |
+|----------------|--------|----------|--------------|--------------------------------------|
+| `id`          | STRING | ✅        | "Node ID"    | Unique identifier for the node. |
+| `label`       | STRING | ✅        | "Node Label" | Label for the node. |
+| `default_value` | STRING | ❌        | `None`        | Default text value (optional). |
+| `trigger_words` | STRING | ❌        | `None`        | Additional keywords to associate with the text. |
+
+### **Outputs**
+| Name           | Type   | Description                         |
+|---------------|-------|-------------------------------------|
+| `text`        | STRING | The processed text output. |
+| `trigger_words` | STRING | Associated trigger words. |
+
+## ⚙️ Functionality
+
+- Outputs both a **main text value** and **trigger words**.
+- If `default_value` is set, it will return that as text output.
+- Uses `hashlib.sha256` for unique change detection.

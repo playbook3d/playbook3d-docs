@@ -1,0 +1,29 @@
+---
+title: "Playbook Beauty"
+description: "Retrieves the Beauty Render Pass from Playbook3D API."
+---
+
+## Overview
+
+The **Playbook Beauty** node fetches the **Beauty Render Pass** from Playbook3D based on a provided API key and optional `run_id`. If no valid API key or run data is available, it returns a default image.
+
+## 🛠️ Node Configuration
+
+### **Inputs**
+| Name         | Type   | Required | Description |
+|-------------|--------|----------|--------------------------------|
+| `api_key`   | STRING | ✅        | API key for authentication. |
+| `run_id`    | STRING | ❌        | Optional identifier for a specific run. |
+| `default_value` | IMAGE | ❌        | Default image if no valid render is found. |
+
+### **Outputs**
+| Name   | Type   | Description |
+|--------|--------|--------------------------------|
+| `Image` | IMAGE | The retrieved Beauty Render Pass. |
+
+## ⚙️ Functionality
+
+- Uses `api_key` to authenticate with Playbook3D.
+- If `run_id` is provided, fetches the Beauty Pass for that specific render.
+- If no valid render is found, returns the **default image**.
+- Converts the retrieved image to an RGB tensor format.

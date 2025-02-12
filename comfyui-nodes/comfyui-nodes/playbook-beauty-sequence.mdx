@@ -1,0 +1,28 @@
+---
+title: "Beauty Pass Sequence"
+description: "Retrieves a sequence of Beauty Render Pass images from Playbook3D API."
+---
+
+## Overview
+
+The **Beauty Pass Sequence** node fetches a ZIP file containing multiple **Beauty Render Pass** images from Playbook3D. It extracts and returns the images as a batch tensor.
+
+## 🛠️ Node Configuration
+
+### **Inputs**
+| Name         | Type   | Required | Description |
+|-------------|--------|----------|--------------------------------|
+| `api_key`   | STRING | ✅        | API key for authentication. |
+| `run_id`    | STRING | ❌        | Optional identifier for a specific run. |
+
+### **Outputs**
+| Name     | Type   | Description |
+|----------|--------|--------------------------------|
+| `Images` | IMAGE | A batch tensor containing extracted images from the Beauty Pass sequence. |
+
+## ⚙️ Functionality
+
+- Uses `api_key` to authenticate with Playbook3D.
+- Retrieves a ZIP file containing multiple **Beauty Render Pass** images.
+- Extracts and converts the images into a batch tensor format.
+- Processes and normalizes the images before returning them.

@@ -1,0 +1,29 @@
+---
+title: "Playbook Outline"
+description: "Retrieves the Outline Render Pass from Playbook3D API."
+---
+
+## Overview
+
+The **Playbook Outline** node fetches the **Outline Render Pass** from Playbook3D using an API key and an optional `run_id`. If no valid data is found, it returns a default image.
+
+## 🛠️ Node Configuration
+
+### **Inputs**
+| Name         | Type   | Required | Description |
+|-------------|--------|----------|--------------------------------|
+| `api_key`   | STRING | ✅        | API key for authentication. |
+| `run_id`    | STRING | ❌        | Optional identifier for a specific run. |
+| `default_value` | IMAGE | ❌        | Default image if no valid render is found. |
+
+### **Outputs**
+| Name   | Type   | Description |
+|--------|--------|--------------------------------|
+| `Image` | IMAGE | The retrieved Outline Render Pass image. |
+
+## ⚙️ Functionality
+
+- Uses `api_key` to authenticate with Playbook3D.
+- If `run_id` is provided, fetches the Outline Pass for that specific render.
+- If no valid render is found, returns the **default image**.
+- Converts the retrieved image to an RGB tensor format.

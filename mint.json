@@ -137,13 +137,9 @@
         "comfyui-nodes/comfyui-nodes/playbook-lora-select",
         "comfyui-nodes/comfyui-nodes/playbook-seed",
         "comfyui-nodes/comfyui-nodes/playbook-depth",
-        "comfyui-nodes/comfyui-nodes/playbook-depth-sequence",
         "comfyui-nodes/comfyui-nodes/playbook-outline",
-        "comfyui-nodes/comfyui-nodes/playbook-outline-sequence",
         "comfyui-nodes/comfyui-nodes/playbook-mask",
-        "comfyui-nodes/comfyui-nodes/playbook-mask-sequence",
-        "comfyui-nodes/comfyui-nodes/playbook-beauty",
-        "comfyui-nodes/comfyui-nodes/playbook-beauty-sequence"
+        "comfyui-nodes/comfyui-nodes/playbook-beauty"
       ]
     }
   ],

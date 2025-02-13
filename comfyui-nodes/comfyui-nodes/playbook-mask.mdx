@@ -1,26 +1,25 @@
 ---
 title: "Playbook Mask"
-description: "Retrieves the Mask Render Pass from Playbook3D API."
+description: "Retrieves the Mask Render Pass from Playbook3D API, supporting both single-frame and sequence modes."
 ---
 
-## Overview
+# Playbook Mask Pass Node
 
-The **Playbook Mask** node fetches the **Mask Render Pass** from Playbook3D using an API key and an optional `run_id`. It applies optional Gaussian blur and returns both the composite mask and individual color-based masks.
+The **Playbook Mask Pass** node retrieves a **single Mask Render Pass frame** from Playbook3D. It extracts and returns both the composite mask and 8 individual color-based masks.
 
 ## 🛠️ Node Configuration
 
 ### **Inputs**
-| Name         | Type   | Required | Default | Description |
-|-------------|--------|----------|---------|--------------------------------|
-| `api_key`   | STRING | ✅        | N/A     | API key for authentication. |
-| `blur_size` | FLOAT  | ✅        | `0.0`   | Gaussian blur radius (0 for no blur). |
-| `run_id`    | STRING | ❌        | N/A     | Optional identifier for a specific run. |
-| `default_value` | IMAGE | ❌     | N/A     | Default mask if no valid render is found. |
+| Name         | Type   | Required | Default  | Description |
+|-------------|--------|----------|----------|--------------------------------|
+| `api_key`   | STRING | ✅        | N/A      | API key for authentication. |
+| `blur_size` | FLOAT  | ✅        | `0.0`    | Gaussian blur radius (0 for no blur). |
+| `run_id`    | STRING | ❌        | N/A      | Optional identifier for a specific run. |
 
 ### **Outputs**
 | Name       | Type   | Description |
 |------------|--------|--------------------------------|
-| `image`    | IMAGE  | Composite mask image. |
+| `mask_pass` | IMAGE  | Composite mask image. |
 | `mask_1`   | MASK   | Mask extracted from color code #ffe906. |
 | `mask_2`   | MASK   | Mask extracted from color code #0589d6. |
 | `mask_3`   | MASK   | Mask extracted from color code #a2d4d5. |
@@ -33,7 +32,29 @@ The **Playbook Mask** node fetches the **Mask Render Pass** from Playbook3D usin
 ## ⚙️ Functionality
 
 - Uses `api_key` to authenticate with Playbook3D.
-- If `run_id` is provided, fetches the Mask Pass for that specific render.
-- If no valid render is found, returns the **default mask**.
-- Extracts **8 color-based masks** from the composite image.
-- Applies optional **Gaussian blur** to smooth the masks.
+- Fetches the composite mask and extracts **8 color-based masks**.
+- Applies optional **Gaussian blur** to smooth mask edges.
+
+# Playbook Mask Pass Sequence Node
+
+The **Playbook Mask Pass Sequence** node retrieves a **sequence of Mask Render Pass frames** from Playbook3D. It fetches a ZIP file containing multiple mask images and processes them.
+
+## 🛠️ Node Configuration
+
+### **Inputs**
+| Name         | Type   | Required | Default  | Description |
+|-------------|--------|----------|----------|--------------------------------|
+| `api_key`   | STRING | ✅        | N/A      | API key for authentication. |
+| `blur_size` | FLOAT  | ✅        | `0.0`    | Gaussian blur radius (0 for no blur). |
+| `run_id`    | STRING | ❌        | N/A      | Optional identifier for a specific run. |
+
+### **Outputs**
+| Name     | Type   | Description |
+|----------|--------|--------------------------------|
+| `Images` | IMAGE  | A batch tensor containing extracted Mask Pass frames. |
+
+## ⚙️ Functionality
+
+- Uses `api_key` to authenticate with Playbook3D.
+- Retrieves a **ZIP file containing multiple Mask Pass frames**.
+- Extracts and processes the masks from the ZIP file.

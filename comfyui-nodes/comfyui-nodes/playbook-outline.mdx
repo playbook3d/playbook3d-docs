@@ -1,25 +1,25 @@
 ---
 title: "Playbook Outline"
-description: "Retrieves the Outline Render Pass from Playbook3D API."
+description: "Retrieves the Outline Render Pass from Playbook3D API, supporting both single-frame and sequence modes."
 ---
 
-## Overview
+# Playbook Outline Pass Node
 
-The **Playbook Outline** node fetches the **Outline Render Pass** from Playbook3D using an API key and an optional `run_id`. If no valid data is found, it returns a default image.
+The **Playbook Outline Pass** node retrieves a **single Outline Render Pass frame** from Playbook3D. It provides edge-detection data for rendering workflows.
 
 ## 🛠️ Node Configuration
 
 ### **Inputs**
-| Name         | Type   | Required | Description |
-|-------------|--------|----------|--------------------------------|
-| `api_key`   | STRING | ✅        | API key for authentication. |
-| `run_id`    | STRING | ❌        | Optional identifier for a specific run. |
-| `default_value` | IMAGE | ❌        | Default image if no valid render is found. |
+| Name         | Type   | Required | Default | Description |
+|-------------|--------|----------|---------|--------------------------------|
+| `api_key`   | STRING | ✅        | N/A     | API key for authentication. |
+| `run_id`    | STRING | ❌        | N/A     | Optional identifier for a specific run. |
+| `default_value` | IMAGE | ❌        | N/A     | Default image if no valid render is found. |
 
 ### **Outputs**
-| Name   | Type   | Description |
-|--------|--------|--------------------------------|
-| `Image` | IMAGE | The retrieved Outline Render Pass image. |
+| Name     | Type   | Description |
+|----------|--------|--------------------------------|
+| `Image`  | IMAGE  | The retrieved Outline Render Pass image. |
 
 ## ⚙️ Functionality
 
@@ -27,3 +27,27 @@ The **Playbook Outline** node fetches the **Outline Render Pass** from Playbook3
 - If `run_id` is provided, fetches the Outline Pass for that specific render.
 - If no valid render is found, returns the **default image**.
 - Converts the retrieved image to an RGB tensor format.
+
+# Playbook Outline Pass Sequence Node
+
+The **Playbook Outline Pass Sequence** node retrieves a **sequence of Outline Render Pass frames** from Playbook3D. It fetches a ZIP file containing multiple outline images and processes them as a batch.
+
+## 🛠️ Node Configuration
+
+### **Inputs**
+| Name         | Type   | Required | Default | Description |
+|-------------|--------|----------|---------|--------------------------------|
+| `api_key`   | STRING | ✅        | N/A     | API key for authentication. |
+| `run_id`    | STRING | ❌        | N/A     | Optional identifier for a specific run. |
+
+### **Outputs**
+| Name     | Type   | Description |
+|----------|--------|--------------------------------|
+| `Images` | IMAGE  | A batch tensor containing extracted Outline Pass frames. |
+
+## ⚙️ Functionality
+
+- Uses `api_key` to authenticate with Playbook3D.
+- Retrieves a ZIP file containing multiple **Outline Pass frames**.
+- Extracts and converts the images into a batch tensor format.
+- Processes and normalizes the images before returning them.

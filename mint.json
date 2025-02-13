@@ -143,8 +143,7 @@
         "comfyui-nodes/comfyui-nodes/playbook-mask",
         "comfyui-nodes/comfyui-nodes/playbook-mask-sequence",
         "comfyui-nodes/comfyui-nodes/playbook-beauty",
-        "comfyui-nodes/comfyui-nodes/playbook-beauty-sequence",
-        "comfyui-nodes/comfyui-nodes/playbook-render-result"
+        "comfyui-nodes/comfyui-nodes/playbook-beauty-sequence"
       ]
     }
   ],

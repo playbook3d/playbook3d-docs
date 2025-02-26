@@ -115,6 +115,13 @@
       "pages": [
         "api-reference/run_workflow/run-workflow-team_id"
       ]
+    },
+    {
+      "group": "Upload Assets",
+      "pages": [
+        "api-reference/uploads/post-image",
+        "api-reference/uploads/post-video"
+      ]
     }
   ],
   "footerSocials": {

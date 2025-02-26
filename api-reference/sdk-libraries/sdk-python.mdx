@@ -9,14 +9,17 @@ Playbook's Python SDK integrates any python application with ComfyUI. It allows 
 
 ## How To Use Playbook's Python SDK
 <Steps>
-    <Step title="Git clone the sdk">
-        Git clone our repository into your project, <b>Pip install version is coming soon!</b>.
+    <Step title="Install our sdk">
+        <b>Pip install is here!</b>. You can install Playbook3d via 
+        ```python
+        pip install -i https://test.pypi.org/simple/ playbook3d
+        ```
     </Step>
 
     <Step title="Import the sdk">
         Import the sdk into your code with:
             ```python
-            from playbookNetworkClient import PlaybookClient
+            from playbook3d.playbookNetworkClient import PlaybookClient
             ```
     </Step>
 
@@ -33,11 +36,11 @@ Playbook's Python SDK integrates any python application with ComfyUI. It allows 
 ## Creating a run
 After you pull data from the sdk, you can queue a generation using:
 ```python
-self.playbookClient.run_workflow({"Add the PlaybookWorkflow you want to run"})
+self.playbookClient.run_workflow(PlaybookRun: run)
 ```
 
 ## Getting your results
 You can either get your results from the [Playbook webclient](https://beta.playbook3d.com) logging in with the same account or by calling:
 ```python
-self.playbookClient.get_run_result({"Add the PlaybookRun you're requestin results from"})
+self.playbookClient.get_run_result({PlaybookRun: run})
 ```

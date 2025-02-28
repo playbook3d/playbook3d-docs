@@ -760,46 +760,208 @@
         ]
       },
       "patch": {
-        "tags": ["run-workflow"],
-        "summary": "Run Workflow",
-        "description": "Runs specified workflow.",
-        "operationId": "run_workflow",
+        "tags": ["workflows"],
+        "summary": "Update an Existing Workflow",
+        "description": "Updates fields of a workflow specified by workflow_id. Requires JWT and x-api-key.",
+        "operationId": "update_workflow",
         "parameters": [
           {
-            "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your x-api-key using the 'Profile' tab on the website.",
-            "required": false,
+            "name": "workflow_id",
+            "in": "path",
+            "description": "The UUID of the workflow to update.",
+            "required": true,
             "schema": {
               "type": "string",
-              "title": "X-Api-Key",
-              "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your x-api-key using the 'Profile' tab on the website."
-            },
+              "format": "uuid"
+            }
+          },
+          {
             "name": "x-api-key",
-            "in": "header"
+            "in": "header",
+            "description": "Your API key. This is required by most endpoints to access the API programmatically. You can view your x-api-key using the 'Profile' tab on the website.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer token for authentication (JWT).",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "requestBody": {
+          "required": true,
+          "description": "JSON fields to update on the specified workflow.",
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/run_workflow_post"
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "New workflow name."
+                  },
+                  "team_id": {
+                    "type": "string",
+                    "description": "UUID of the team to which the workflow will be reassigned."
+                  },
+                  "owner_id": {
+                    "type": "string",
+                    "description": "UUID of the new owner of this workflow (if your code allows updating ownership)."
+                  },
+                  "is_external": {
+                    "type": "boolean",
+                    "description": "Whether this workflow is marked as external."
+                  },
+                  "canvas_type": {
+                    "type": "integer",
+                    "description": "Canvas type (0 for basic, etc.)."
+                  }
+                },
+                "example": {
+                  "name": "Updated Workflow #4",
+                  "team_id": "41480ee5-14ff-4f9e-89bf-91b0a8e50e77",
+                  "owner_id": "ab7dafe2-4f19-4570-bad0-a88e70ad2c11",
+                  "is_external": false,
+                  "canvas_type": 0
+                }
               }
             }
-          },
-          "required": true
+          }
         },
         "responses": {
           "200": {
-            "description": "Successful Response",
-            "content": {
-              "audio/mpeg": {}
-            }
-          },
-          "422": {
-            "description": "Validation Error",
+            "description": "Successfully updated workflow. Returns the updated workflow JSON.",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "The workflow’s UUID."
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "Updated workflow name."
+                    },
+                    "team_id": {
+                      "type": "string",
+                      "description": "Current team UUID after update."
+                    },
+                    "owner_id": {
+                      "type": "string",
+                      "description": "Current owner UUID after update (if changed)."
+                    }
+                  },
+                  "example": {
+                    "id": "123e4567-e89b-12d3-a456-426614174000",
+                    "name": "Updated Workflow #4",
+                    "team_id": "41480ee5-14ff-4f9e-89bf-91b0a8e50e77",
+                    "owner_id": "ab7dafe2-4f19-4570-bad0-a88e70ad2c11",
+                    "canvas_type": 0,
+                    "is_external": false
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request. Possibly invalid JSON or missing fields.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "string",
+                      "description": "Bad Request. Possibly invalid JSON or missing fields."
+                    }
+                  },
+                  "example": {
+                    "description": "Bad Request. Possibly invalid JSON or missing fields."
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized. Check your JWT or API key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "string",
+                      "description": "Unauthorized. The Bearer token or API key is invalid or missing."
+                    }
+                  },
+                  "example": {
+                    "description": "Unauthorized. The Bearer token or API key is invalid or missing."
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden. The user does not have permission to update this workflow.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "string",
+                      "description": "Forbidden. The user does not have permission."
+                    }
+                  },
+                  "example": {
+                    "description": "Forbidden. The user does not have permission."
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found. The workflow ID does not exist.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "string",
+                      "description": "Not Found. The workflow ID does not exist."
+                    }
+                  },
+                  "example": {
+                    "description": "Not Found. The workflow ID does not exist."
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error. Something went wrong on the server.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "string",
+                      "description": "Internal Server Error. Something went wrong on the server."
+                    }
+                  },
+                  "example": {
+                    "description": "Internal Server Error. Something went wrong on the server."
+                  }
                 }
               }
             }
@@ -807,20 +969,20 @@
         },
         "x-codeSamples": [
           {
+            "lang": "cURL",
+            "source": "curl -X PATCH \\\n  -H 'Authorization: Bearer $API_KEY' \\\n  -H 'x-api-key: $API_KEY' \\\n  -H 'Content-Type: application/json' \\\n  -H 'Accept: application/json' \\\n  -d '{\"name\": \"Updated Workflow #4\", \"team_id\": \"41480ee5-14ff-4f9e-89bf-91b0a8e50e77\", \"owner_id\": \"ab7dafe2-4f19-4570-bad0-a88e70ad2c11\", \"is_external\": false, \"canvas_type\": 0}' \\\n  '$BASE_URL/workflows/$workflow_id'"
+          },
+          {
             "lang": "Python",
-            "source": ""
+            "source": "import requests\n\nheaders = {\n  'x-api-key': '<YOUR_API_KEY>',\n  'Authorization': 'Bearer <YOUR_JWT_TOKEN>',\n  'Content-Type': 'application/json',\n  'Accept': 'application/json'\n}\ndata = {\n  'name': 'Updated Workflow #4',\n  'team_id': '41480ee5-14ff-4f9e-89bf-91b0a8e50e77',\n  'owner_id': 'ab7dafe2-4f19-4570-bad0-a88e70ad2c11',\n  'is_external': False,\n  'canvas_type': 0\n}\n\nresp = requests.patch(f\"https://accounts.playbook3d.com/workflows/{{workflow_id}}\", json=data, headers=headers)\nprint(resp.status_code, resp.json())"
           },
           {
             "lang": "JavaScript",
-            "source": ""
+            "source": "fetch(`https://accounts.playbook3d.com/workflows/${workflow_id}`, {\n  method: 'PATCH',\n  headers: {\n    'x-api-key': '<YOUR_API_KEY>',\n    'Authorization': 'Bearer <YOUR_JWT_TOKEN>',\n    'Content-Type': 'application/json',\n    'Accept': 'application/json'\n  },\n  body: JSON.stringify({\n    name: 'Updated Workflow #4',\n    team_id: '41480ee5-14ff-4f9e-89bf-91b0a8e50e77',\n    owner_id: 'ab7dafe2-4f19-4570-bad0-a88e70ad2c11',\n    is_external: false,\n    canvas_type: 0\n  })\n})\n  .then(res => res.json())\n  .then(data => console.log(data))\n  .catch(err => console.error(err));"
           },
           {
             "lang": "C#",
-            "source": ""
-          },
-          {
-            "lang": "cURL",
-            "source": "curl -X PATCH \\\n  -H 'Authorization: Bearer $API_KEY' \\\n  -H 'Content-Type: application/json' \\\n  -H 'Accept: application/json' \\\n  -d '{\"id\": \"workflow_id\", \"origin\": \"2\", \"inputs\": {}}' \\\n  '$BASE_URL/workflows/{team_id}'"
+            "source": "// Using HttpClient\nHttpClient client = new HttpClient();\nclient.DefaultRequestHeaders.Add(\"x-api-key\", \"<YOUR_API_KEY>\");\nclient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(\"Bearer\", \"<YOUR_JWT_TOKEN>\");\n\nvar updateFields = new {\n    name = \"Updated Workflow #4\",\n    team_id = \"41480ee5-14ff-4f9e-89bf-91b0a8e50e77\",\n    owner_id = \"ab7dafe2-4f19-4570-bad0-a88e70ad2c11\",\n    is_external = false,\n    canvas_type = 0\n};\n\nvar content = new StringContent(\n    JsonConvert.SerializeObject(updateFields), Encoding.UTF8, \"application/json\");\nvar response = await client.PatchAsync($\"https://accounts.playbook3d.com/workflows/{workflow_id}\", content);\nstring respContent = await response.Content.ReadAsStringAsync();\nConsole.WriteLine(response.StatusCode);\nConsole.WriteLine(respContent);"
           }
         ]
       }

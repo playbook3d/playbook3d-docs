@@ -187,66 +187,66 @@
     "/get_run_id": {
       "get": {
         "tags": ["run-workflow"],
-        "summary": "Run Workflow",
-        "description": "Runs specified workflow.",
-        "operationId": "run_workflow",
+        "summary": "Retrieve a new Run ID",
+        "description": "Returns a fresh run_id (UUID) that you can use to identify or track a workflow execution.",
+        "operationId": "get_run_id",
         "parameters": [
           {
-            "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your x-api-key using the 'Profile' tab on the website.",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "title": "X-Api-Key",
-              "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your x-api-key using the 'Profile' tab on the website."
-            },
             "name": "x-api-key",
-            "in": "header"
+            "in": "header",
+            "description": "Your API key. Required by most endpoints for programmatic access. Viewable in 'Profile' tab on the website.",
+            "required": true,
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer token for authentication (JWT).",
+            "required": true,
+            "schema": { "type": "string" }
           }
         ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/run_workflow_post"
-              }
-            }
-          },
-          "required": true
-        },
         "responses": {
           "200": {
-            "description": "Successful Response",
-            "content": {
-              "audio/mpeg": {}
-            }
-          },
-          "422": {
-            "description": "Validation Error",
+            "description": "OK. Successfully retrieved a run ID.",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
+                  "type": "object",
+                  "properties": {
+                    "run_id": {
+                      "type": "string",
+                      "format": "uuid",
+                      "description": "Newly generated run ID (UUID)."
+                    }
+                  },
+                  "example": {
+                    "run_id": "3fa85f64-5717-4752-b3fc-2c963f66aga6"
+                  }
                 }
               }
             }
+          },
+          "401": {
+            "description": "Unauthorized. Check your API key or token."
+          },
+          "402": {
+            "description": "Payment required. Subscription or plan issue."
+          },
+          "403": {
+            "description": "Forbidden. You lack permission to perform this action."
+          },
+          "404": {
+            "description": "Resource not found."
+          },
+          "500": {
+            "description": "Internal Server Error. Something went wrong on the server."
           }
         },
         "x-codeSamples": [
           {
-            "lang": "Python",
-            "source": ""
-          },
-          {
-            "lang": "JavaScript",
-            "source": ""
-          },
-          {
-            "lang": "C#",
-            "source": "RunWorkflowProperties data =\n\tnew()\n\t{\n\t\tid = {workflow_id},\n\t\torigin = \"2\",\n\t\tinputs = new { },\n\t};"
-          },
-          {
             "lang": "cURL",
-            "source": "curl -X GET \\\n  -H 'Authorization: Bearer $API_KEY' \\\n  -H 'Accept: application/json' \\\n  '$BASE_URL/get_run_id'"
+            "source": "curl -X GET \\\n  -H 'Authorization: Bearer <YOUR_JWT>' \\\n  -H 'Accept: application/json' \\\n  'https://api.playbook3d.com/get_run_id'"
           }
         ]
       }

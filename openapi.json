@@ -425,46 +425,138 @@
     },
     "/workflows/{workflow_id}": {
       "get": {
-        "tags": ["run-workflow"],
-        "summary": "Run Workflow",
-        "description": "Runs specified workflow.",
-        "operationId": "run_workflow",
+        "tags": ["workflows"],
+        "summary": "Get Workflow by ID",
+        "description": "Retrieves a single workflow record by ID. Requires both JWT and x-api-key.",
+        "operationId": "get_workflow_by_id",
         "parameters": [
           {
-            "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your x-api-key using the 'Profile' tab on the website.",
-            "required": false,
+            "name": "workflow_id",
+            "in": "path",
+            "description": "The UUID of the workflow you want to retrieve.",
+            "required": true,
             "schema": {
               "type": "string",
-              "title": "X-Api-Key",
-              "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your x-api-key using the 'Profile' tab on the website."
-            },
+              "format": "uuid"
+            }
+          },
+          {
             "name": "x-api-key",
-            "in": "header"
+            "in": "header",
+            "description": "Your API key. This is required by most endpoints to access the API programmatically. You can view your x-api-key using the 'Profile' tab on the website.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer token for authentication (JWT).",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
           }
         ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/run_workflow_post"
-              }
-            }
-          },
-          "required": true
-        },
         "responses": {
           "200": {
-            "description": "Successful Response",
-            "content": {
-              "audio/mpeg": {}
-            }
-          },
-          "422": {
-            "description": "Validation Error",
+            "description": "Workflow retrieved successfully.",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
+                  "type": "object",
+                  "properties": {
+                    "workflow": {
+                      "type": "object",
+                      "description": "A JSON object representing the found workflow."
+                    }
+                  },
+                  "example": {
+                    "workflow": {
+                      "id": "123e4567-e89b-12d3-a456-426614174000",
+                      "name": "Example Workflow",
+                      "team_id": "41480ee5-14ff-4f9e-89bf-91b0a8e50e77",
+                      "canvas_type": 0,
+                      "created_at": "2025-01-02T10:00:00Z"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized. Check your JWT or API key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "string",
+                      "description": "Unauthorized. Check your JWT or API key."
+                    }
+                  },
+                  "example": {
+                    "description": "Unauthorized. Check your JWT or API key."
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden. You do not have permission to access this workflow.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "string",
+                      "description": "Forbidden. You do not have permission to access this workflow."
+                    }
+                  },
+                  "example": {
+                    "description": "Forbidden. You do not have permission to access this workflow."
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found. The requested workflow could not be found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "string",
+                      "description": "Not Found. The requested workflow could not be found."
+                    }
+                  },
+                  "example": {
+                    "description": "Not Found. The requested workflow could not be found."
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error. Something went wrong on the server.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "string",
+                      "description": "Internal Server Error. Something went wrong on the server."
+                    }
+                  },
+                  "example": {
+                    "description": "Internal Server Error. Something went wrong on the server."
+                  }
                 }
               }
             }
@@ -472,64 +564,177 @@
         },
         "x-codeSamples": [
           {
+            "lang": "cURL",
+            "source": "curl -X GET \\\n  -H 'Authorization: Bearer $API_KEY' \\\n  -H 'Accept: application/json' \\\n  '$BASE_URL/workflows/$workflow_id'"
+          },
+          {
             "lang": "Python",
-            "source": ""
+            "source": "import requests\n\nheaders = {\n    'x-api-key': '<YOUR_API_KEY>',\n    'Authorization': 'Bearer <YOUR_JWT_TOKEN>',\n    'Accept': 'application/json'\n}\nresp = requests.get(f\"https://example.com/workflows/{{workflow_id}}\", headers=headers)\nprint(resp.status_code, resp.json())"
           },
           {
             "lang": "JavaScript",
-            "source": ""
+            "source": "fetch(`https://example.com/workflows/${workflow_id}`, {\n  method: 'GET',\n  headers: {\n    'x-api-key': '<YOUR_API_KEY>',\n    'Authorization': 'Bearer <YOUR_JWT_TOKEN>',\n    'Accept': 'application/json'\n  }\n}).then(res => res.json())\n  .then(data => console.log(data))\n  .catch(err => console.error(err));"
           },
           {
             "lang": "C#",
-            "source": ""
-          },
-          {
-            "lang": "cURL",
-            "source": "curl -X GET \\\n  -H 'Authorization: Bearer $API_KEY' \\\n  -H 'Accept: application/json' \\\n  '$BASE_URL/workflows/$workflow_id'"
+            "source": "// Using HttpClient\nHttpClient client = new HttpClient();\nclient.DefaultRequestHeaders.Add(\"x-api-key\", \"<YOUR_API_KEY>\");\nclient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(\"Bearer\", \"<YOUR_JWT_TOKEN>\");\n\nvar response = await client.GetAsync($\"https://example.com/workflows/{workflow_id}\");\nstring content = await response.Content.ReadAsStringAsync();\nConsole.WriteLine(response.StatusCode);\nConsole.WriteLine(content);"
           }
         ]
       },
       "delete": {
-        "tags": ["run-workflow"],
-        "summary": "Run Workflow",
-        "description": "Runs specified workflow.",
-        "operationId": "run_workflow",
+        "tags": ["workflows"],
+        "summary": "Delete Workflow by ID",
+        "description": "Deletes the specified workflow by ID (could be a soft-delete or permanent, depending on server logic). Requires both JWT and x-api-key.",
+        "operationId": "delete_workflow",
         "parameters": [
           {
-            "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your x-api-key using the 'Profile' tab on the website.",
-            "required": false,
+            "name": "workflow_id",
+            "in": "path",
+            "description": "The UUID of the workflow you want to delete.",
+            "required": true,
             "schema": {
               "type": "string",
-              "title": "X-Api-Key",
-              "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your x-api-key using the 'Profile' tab on the website."
-            },
+              "format": "uuid"
+            }
+          },
+          {
             "name": "x-api-key",
-            "in": "header"
+            "in": "header",
+            "description": "Your API key. This is required by most endpoints to access the API programmatically. You can view your x-api-key using the 'Profile' tab on the website.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer token for authentication (JWT).",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
           }
         ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/run_workflow_post"
-              }
-            }
-          },
-          "required": true
-        },
         "responses": {
           "200": {
-            "description": "Successful Response",
-            "content": {
-              "audio/mpeg": {}
-            }
-          },
-          "422": {
-            "description": "Validation Error",
+            "description": "Successful Deletion. The server returns a JSON body about the removed workflow.",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
+                  "type": "object",
+                  "properties": {
+                    "workflow": {
+                      "type": "object",
+                      "description": "The deleted workflow object or confirmation details."
+                    }
+                  },
+                  "example": {
+                    "workflow": {
+                      "id": "123e4567-e89b-12d3-a456-426614174000",
+                      "name": "Deleted Workflow",
+                      "status": "removed",
+                      "deleted_at": "2024-12-31T00:00:00Z"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content. The server indicates success but returns no body."
+          },
+          "400": {
+            "description": "Bad Request. Possibly invalid workflow_id format.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "string",
+                      "description": "Bad Request. Possibly invalid workflow_id format."
+                    }
+                  },
+                  "example": {
+                    "description": "Bad Request. Possibly invalid workflow_id format."
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized. The Bearer token or API key is invalid or missing.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "string",
+                      "description": "Unauthorized. The Bearer token or API key is invalid or missing."
+                    }
+                  },
+                  "example": {
+                    "description": "Unauthorized. The Bearer token or API key is invalid or missing."
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden. The user does not have permission to delete this workflow.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "string",
+                      "description": "Forbidden. The user does not have permission to delete this workflow."
+                    }
+                  },
+                  "example": {
+                    "description": "Forbidden. The user does not have permission to delete this workflow."
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found. The workflow with the given ID was not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "string",
+                      "description": "Not Found. The workflow with the given ID was not found."
+                    }
+                  },
+                  "example": {
+                    "description": "Not Found. The workflow with the given ID was not found."
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error. Something went wrong on the server.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "string",
+                      "description": "Internal Server Error. Something went wrong on the server."
+                    }
+                  },
+                  "example": {
+                    "description": "Internal Server Error. Something went wrong on the server."
+                  }
                 }
               }
             }
@@ -537,20 +742,20 @@
         },
         "x-codeSamples": [
           {
+            "lang": "cURL",
+            "source": "curl -X DELETE \\\n  -H 'Authorization: Bearer $API_KEY' \\\n  -H 'Accept: application/json' \\\n  '$BASE_URL/workflows/$workflow_id'"
+          },
+          {
             "lang": "Python",
-            "source": ""
+            "source": "import requests\n\nheaders = {\n    'x-api-key': '<YOUR_API_KEY>',\n    'Authorization': 'Bearer <YOUR_JWT_TOKEN>',\n    'Accept': 'application/json'\n}\nresp = requests.delete(f\"https://example.com/workflows/{workflow_id}\", headers=headers)\nprint(resp.status_code, resp.text)"
           },
           {
             "lang": "JavaScript",
-            "source": ""
+            "source": "fetch(`https://example.com/workflows/${workflow_id}`, {\n  method: 'DELETE',\n  headers: {\n    'x-api-key': '<YOUR_API_KEY>',\n    'Authorization': 'Bearer <YOUR_JWT_TOKEN>',\n    'Accept': 'application/json'\n  }\n}).then(async res => {\n  console.log(res.status);\n  console.log(await res.text());\n}).catch(err => console.error(err));"
           },
           {
             "lang": "C#",
-            "source": ""
-          },
-          {
-            "lang": "cURL",
-            "source": "curl -X DELETE \\\n  -H 'Authorization: Bearer $API_KEY' \\\n  -H 'Accept: application/json' \\\n  '$BASE_URL/workflows/$workflow_id'"
+            "source": "// Using HttpClient\nHttpClient client = new HttpClient();\nclient.DefaultRequestHeaders.Add(\"x-api-key\", \"<YOUR_API_KEY>\");\nclient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(\"Bearer\", \"<YOUR_JWT_TOKEN>\");\n\nvar response = await client.DeleteAsync($\"https://example.com/workflows/{workflow_id}\");\nstring content = await response.Content.ReadAsStringAsync();\nConsole.WriteLine(response.StatusCode);\nConsole.WriteLine(content);"
           }
         ]
       },
@@ -620,48 +825,182 @@
         ]
       }
     },
-    "/workflows": {
-      "get": {
-        "tags": ["run-workflow"],
-        "summary": "Run Workflow",
-        "description": "Runs specified workflow.",
-        "operationId": "run_workflow",
+    "/cancel/{team_id}/{run_id}": {
+      "post": {
+        "tags": ["workflows"],
+        "summary": "Cancel a Running Workflow",
+        "description": "Cancels an ongoing run for a given team and run ID. Requires JWT bearer token and x-api-key.",
+        "operationId": "cancel_run",
         "parameters": [
           {
-            "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your x-api-key using the 'Profile' tab on the website.",
-            "required": false,
+            "name": "team_id",
+            "in": "path",
+            "description": "The UUID of the team that owns this run.",
+            "required": true,
             "schema": {
               "type": "string",
-              "title": "X-Api-Key",
-              "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your x-api-key using the 'Profile' tab on the website."
-            },
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "run_id",
+            "in": "path",
+            "description": "The UUID of the run to cancel.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
             "name": "x-api-key",
-            "in": "header"
+            "in": "header",
+            "description": "Your API key. This is required by most endpoints to access our API programmatically. You can view your x-api-key using the 'Profile' tab on the website.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer token for authentication (JWT).",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
           }
         ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/run_workflow_post"
-              }
-            }
-          },
-          "required": true
-        },
         "responses": {
           "200": {
-            "description": "Successful Response",
-            "content": {
-              "audio/mpeg": {}
-            }
-          },
-          "422": {
-            "description": "Validation Error",
+            "description": "The run was canceled successfully or is already in a final state.",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "A success message, or final run state."
+                    }
+                  },
+                  "example": {
+                    "message": "Run successfully canceled."
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request. Possibly invalid team_id/run_id format.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "string",
+                      "description": "Bad Request. Possibly invalid team_id/run_id format."
+                    }
+                  },
+                  "example": {
+                    "description": "Bad Request. Possibly invalid team_id/run_id format."
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized. The Bearer token or API key is invalid or missing.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "string",
+                      "description": "Unauthorized. The Bearer token or API key is invalid or missing."
+                    }
+                  },
+                  "example": {
+                    "description": "Unauthorized. The Bearer token or API key is invalid or missing."
+                  }
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "Payment Required. Subscription not active or no credits available.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "string",
+                      "description": "Payment Required. Subscription not active or no credits available."
+                    }
+                  },
+                  "example": {
+                    "description": "Payment Required. Subscription not active or no credits available."
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden. You do not have permission to cancel this run.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "string",
+                      "description": "Forbidden. You do not have permission to cancel this run."
+                    }
+                  },
+                  "example": {
+                    "description": "Forbidden. You do not have permission to cancel this run."
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found. The run or team was not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "string",
+                      "description": "Not Found. The run or team was not found."
+                    }
+                  },
+                  "example": {
+                    "description": "Not Found. The run or team was not found."
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error. Something went wrong on the server.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "string",
+                      "description": "Internal Server Error. Something went wrong on the server."
+                    }
+                  },
+                  "example": {
+                    "description": "Internal Server Error. Something went wrong on the server."
+                  }
                 }
               }
             }
@@ -669,20 +1008,187 @@
         },
         "x-codeSamples": [
           {
+            "lang": "cURL",
+            "source": "curl -X POST \\\n  -H 'Authorization: Bearer $JWT_TOKEN' \\\n  -H 'Accept: application/json' \\\n  '$BASE_URL/cancel/{TEAM_ID}/{RUN_ID}'"
+          },
+          {
             "lang": "Python",
-            "source": ""
+            "source": "import requests\n\nheaders = {\n    'x-api-key': '<YOUR_API_KEY>',\n    'Authorization': 'Bearer <YOUR_JWT_TOKEN>',\n    'Accept': 'application/json'\n}\nresp = requests.post(\n    f\"https://example.com/cancel/{{TEAM_ID}}/{{RUN_ID}}\",\n    headers=headers\n)\nprint(resp.status_code, resp.json())"
           },
           {
             "lang": "JavaScript",
-            "source": ""
+            "source": "fetch(`https://example.com/cancel/${TEAM_ID}/${RUN_ID}`, {\n  method: 'POST',\n  headers: {\n    'x-api-key': '<YOUR_API_KEY>',\n    'Authorization': 'Bearer <YOUR_JWT_TOKEN>',\n    'Accept': 'application/json'\n  }\n})\n.then(res => res.json())\n.then(data => console.log(data))\n.catch(err => console.error(err));"
           },
           {
             "lang": "C#",
-            "source": ""
+            "source": "// Using HttpClient\nHttpClient client = new HttpClient();\nclient.DefaultRequestHeaders.Add(\"x-api-key\", \"<YOUR_API_KEY>\");\nclient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(\"Bearer\", \"<YOUR_JWT_TOKEN>\");\n\nvar response = await client.PostAsync(\"https://example.com/cancel/{TEAM_ID}/{RUN_ID}\", null);\nstring content = await response.Content.ReadAsStringAsync();\nConsole.WriteLine(response.StatusCode);\nConsole.WriteLine(content);"
+          }
+        ]
+      }
+    },
+    "/workflows": {
+      "get": {
+        "tags": ["workflows"],
+        "summary": "List All Workflows",
+        "description": "Retrieves all workflows associated with the current user or their teams.",
+        "operationId": "get_workflows",
+        "parameters": [
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "description": "Your API key. This is required by most endpoints to access the API programmatically. You can view your x-api-key using the 'Profile' tab on the website.",
+            "required": true,
+            "schema": { "type": "string" }
           },
           {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer token for authentication (JWT).",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response. Returns a JSON array of workflows.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": { "type": "string", "description": "The workflow’s unique ID (UUID)." },
+                      "name": { "type": "string", "description": "Workflow name." }
+
+                    }
+                  },
+                  "example": [
+                    {
+                      "id": "14ac2bd4-833c-4baa-bb03-7395463197bd",
+                      "name": "My Example Workflow"
+                    },
+                    {
+                      "id": "c613ad9f-99e2-4de2-8fda-737612fb5c13",
+                      "name": "Another Workflow"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request. Possibly invalid parameters.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "string",
+                      "description": "Bad Request. Possibly invalid parameters."
+                    }
+                  },
+                  "example": {
+                    "description": "Bad Request. Possibly invalid parameters."
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized. The Bearer token or API key is invalid or missing.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "string",
+                      "description": "Unauthorized. The Bearer token or API key is invalid or missing."
+                    }
+                  },
+                  "example": {
+                    "description": "Unauthorized. The Bearer token or API key is invalid or missing."
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden. The user does not have permission to view these workflows.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "string",
+                      "description": "Forbidden. The user does not have permission to view these workflows."
+                    }
+                  },
+                  "example": {
+                    "description": "Forbidden. The user does not have permission to view these workflows."
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found. The /workflows endpoint could not be found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "string",
+                      "description": "Not Found. The /workflows endpoint could not be found."
+                    }
+                  },
+                  "example": {
+                    "description": "Not Found. The /workflows endpoint could not be found."
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error. Something went wrong on the server.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "string",
+                      "description": "Internal Server Error. Something went wrong on the server."
+                    }
+                  },
+                  "example": {
+                    "description": "Internal Server Error. Something went wrong on the server."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
             "lang": "cURL",
-            "source": "curl -X POST \\\n  -H 'Authorization: Bearer $API_KEY' \\\n  -H 'Accept: application/json' \\\n  '$BASE_URL/workflows'"
+            "source": "curl -X GET \\\n  -H 'Authorization: Bearer $API_KEY' \\\n  -H 'Accept: application/json' \\\n  '$BASE_URL/workflows'"
+          },
+          {
+            "lang": "Python",
+            "source": "import requests\n\nheaders = {\n    'x-api-key': '<YOUR_API_KEY>',\n    'Authorization': 'Bearer <YOUR_JWT_TOKEN>',\n    'Accept': 'application/json'\n}\nresp = requests.get('https://accounts.playbook3d.com/workflows', headers=headers)\nprint(resp.status_code, resp.json())"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "fetch('https://accounts.playbook3d.com/workflows', {\n  method: 'GET',\n  headers: {\n    'x-api-key': '<YOUR_API_KEY>',\n    'Authorization': 'Bearer <YOUR_JWT_TOKEN>',\n    'Accept': 'application/json'\n  }\n})\n  .then(res => res.json())\n  .then(data => console.log(data))\n  .catch(err => console.error(err));"
+          },
+          {
+            "lang": "C#",
+            "source": "// Using HttpClient\nHttpClient client = new HttpClient();\nclient.DefaultRequestHeaders.Add(\"x-api-key\", \"<YOUR_API_KEY>\");\nclient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(\"Bearer\", \"<YOUR_JWT_TOKEN>\");\n\nvar response = await client.GetAsync(\"https://accounts.playbook3d.com/workflows\");\nstring content = await response.Content.ReadAsStringAsync();\nConsole.WriteLine(response.StatusCode);\nConsole.WriteLine(content);"
           }
         ]
       },
@@ -1098,7 +1604,7 @@
           }
         ]
       }
-    }    
+    }
   },
   "components": {
     "schemas": {

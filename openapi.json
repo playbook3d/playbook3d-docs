@@ -1193,46 +1193,210 @@
         ]
       },
       "post": {
-        "tags": ["run-workflow"],
-        "summary": "Run Workflow",
-        "description": "Runs specified workflow.",
-        "operationId": "run_workflow",
+        "tags": ["workflows"],
+        "summary": "Create a New Workflow",
+        "description": "Creates a new workflow associated with the specified team (and owned by the user sending the request).",
+        "operationId": "create_workflow",
         "parameters": [
           {
-            "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your x-api-key using the 'Profile' tab on the website.",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "title": "X-Api-Key",
-              "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your x-api-key using the 'Profile' tab on the website."
-            },
             "name": "x-api-key",
-            "in": "header"
+            "in": "header",
+            "description": "Your API key. This is required by most endpoints to access the API programmatically. You can view your x-api-key using the 'Profile' tab on the website.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer token for authentication (JWT).",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "requestBody": {
+          "required": true,
+          "description": "JSON data defining the workflow to be created.",
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/run_workflow_post"
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "Name of the workflow."
+                  },
+                  "team_id": {
+                    "type": "string",
+                    "description": "UUID of the team with which this workflow is associated."
+                  },
+                  "is_external": {
+                    "type": "boolean",
+                    "description": "Indicates if the workflow is an external one."
+                  },
+                  "canvas_type": {
+                    "type": "integer",
+                    "description": "Canvas type (0 for basic, 1 for advanced, etc.)."
+                  },
+                  "public": {
+                    "type": "boolean",
+                    "description": "Whether the workflow is public or private."
+                  }
+                },
+                "example": {
+                  "name": "My Scripted Workflow",
+                  "team_id": "41480ee5-14ff-4f9e-89bf-9750a8e30e77",
+                  "is_external": false,
+                  "canvas_type": 0,
+                  "public": false
+                }
               }
             }
-          },
-          "required": true
+          }
         },
         "responses": {
           "200": {
-            "description": "Successful Response",
-            "content": {
-              "audio/mpeg": {}
-            }
-          },
-          "422": {
-            "description": "Validation Error",
+            "description": "Successfully created workflow (some code returns 200). Returns the new workflow in JSON.",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "The newly created workflow’s UUID."
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "Name of the newly created workflow."
+                    }
+                  },
+                  "example": {
+                    "id": "d0763222-8f38-46aa-a96e-2532038e49b8",
+                    "name": "My Scripted Workflow"
+                  }
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Successfully created workflow (if the code returns 201 instead of 200). Same schema as 200.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "The newly created workflow’s UUID."
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "Name of the newly created workflow."
+                    }
+                  },
+                  "example": {
+                    "id": "d0763222-8f38-46aa-a96e-2532038e49b8",
+                    "name": "My Scripted Workflow"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request. Possibly invalid JSON or missing fields.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "string",
+                      "description": "Bad Request. Possibly invalid JSON or missing fields."
+                    }
+                  },
+                  "example": {
+                    "description": "Bad Request. Possibly invalid JSON or missing fields."
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized. Check your JWT or API key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "string",
+                      "description": "Unauthorized. The Bearer token or API key is invalid or missing."
+                    }
+                  },
+                  "example": {
+                    "description": "Unauthorized. The Bearer token or API key is invalid or missing."
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden. You don't have permission to create a workflow under the specified team.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "string",
+                      "description": "Forbidden. The user does not have the required permission."
+                    }
+                  },
+                  "example": {
+                    "description": "Forbidden. The user does not have the required permission."
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found. Possibly the endpoint is spelled incorrectly or the specified team doesn't exist.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "string",
+                      "description": "Not Found. Possibly the endpoint is spelled incorrectly or the specified team doesn't exist."
+                    }
+                  },
+                  "example": {
+                    "description": "Not Found. Possibly the endpoint is spelled incorrectly or the specified team doesn't exist."
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error. Something went wrong on the server.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "string",
+                      "description": "Internal Server Error. Something went wrong on the server."
+                    }
+                  },
+                  "example": {
+                    "description": "Internal Server Error. Something went wrong on the server."
+                  }
                 }
               }
             }
@@ -1240,20 +1404,20 @@
         },
         "x-codeSamples": [
           {
+            "lang": "cURL",
+            "source": "curl -X POST \\\n  -H 'Authorization: Bearer $API_KEY' \\\n  -H 'Content-Type: application/json' \\\n  -H 'Accept: application/json' \\\n  -d '{\"name\": \"My Scripted Workflow\", \"team_id\": \"YOUR_TEAM_ID\", \"is_external\": false, \"canvas_type\": 0, \"public\": false}' \\\n  '$BASE_URL/workflows'"
+          },
+          {
             "lang": "Python",
-            "source": ""
+            "source": "import requests\n\nheaders = {\n  'x-api-key': '<YOUR_API_KEY>',\n  'Authorization': 'Bearer <YOUR_JWT_TOKEN>',\n  'Content-Type': 'application/json',\n  'Accept': 'application/json'\n}\ndata = {\n  'name': 'My Scripted Workflow',\n  'team_id': '41480ee5-14ff-4f9e-89bf-91b0a8e50e77',\n  'is_external': False,\n  'canvas_type': 0,\n  'public': False\n}\n\nresp = requests.post('https://accounts.playbook3d.com/workflows', json=data, headers=headers)\nprint(resp.status_code, resp.json())"
           },
           {
             "lang": "JavaScript",
-            "source": ""
+            "source": "fetch('https://accounts.playbook3d.com/workflows', {\n  method: 'POST',\n  headers: {\n    'x-api-key': '<YOUR_API_KEY>',\n    'Authorization': 'Bearer <YOUR_JWT_TOKEN>',\n    'Content-Type': 'application/json',\n    'Accept': 'application/json'\n  },\n  body: JSON.stringify({\n    name: 'My Scripted Workflow',\n    team_id: '41480ee5-14ff-4f9e-89bf-91b0a8e50e77',\n    is_external: false,\n    canvas_type: 0,\n    public: false\n  })\n})\n  .then(res => res.json())\n  .then(data => console.log(data))\n  .catch(err => console.error(err));"
           },
           {
             "lang": "C#",
-            "source": ""
-          },
-          {
-            "lang": "cURL",
-            "source": "curl -X POST \\\n  -H 'Authorization: Bearer $API_KEY' \\\n  -H 'Content-Type: application/json' \\\n  -H 'Accept: application/json' \\\n  -d '{\"id\": \"workflow_id\", \"origin\": \"2\", \"inputs\": {}}' \\\n  '$BASE_URL/workflows'"
+            "source": "// Using HttpClient\nHttpClient client = new HttpClient();\nclient.DefaultRequestHeaders.Add(\"x-api-key\", \"<YOUR_API_KEY>\");\nclient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(\"Bearer\", \"<YOUR_JWT_TOKEN>\");\n\nvar newWorkflow = new {\n    name = \"My Scripted Workflow\",\n    team_id = \"41480ee5-14ff-4f9e-89bf-91b0a8e50e77\",\n    is_external = false,\n    canvas_type = 0,\n    _public = false\n};\n\nvar content = new StringContent(\n    JsonConvert.SerializeObject(newWorkflow), Encoding.UTF8, \"application/json\");\nvar response = await client.PostAsync(\"https://accounts.playbook3d.com/workflows\", content);\nstring respContent = await response.Content.ReadAsStringAsync();\nConsole.WriteLine(response.StatusCode);\nConsole.WriteLine(respContent);"
           }
         ]
       }

@@ -100,7 +100,8 @@
         "api-reference/workflows/delete-workflows-workflow_id",
         "api-reference/workflows/get-workflows",
         "api-reference/workflows/get-workflows-workflow_id",
-        "api-reference/workflows/patch-workflows-workflow_id"
+        "api-reference/workflows/patch-workflows-workflow_id",
+        "api-reference/workflows/cancel-team_id-run_id"
       ]
     },
     {

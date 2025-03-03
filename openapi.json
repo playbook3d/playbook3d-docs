@@ -117,6 +117,156 @@
         ]
       }
     },
+    "/upload-image":{
+      "post":{
+        "tags": ["upload-image"],
+        "summary": "Upload image",
+        "description": "Uploads image to Playbook3d's servers.",
+        "operationId": "upload_image",
+        "parameters": [
+          {
+            "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your x-api-key using the 'Profile' tab on the website.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "title": "X-Api-Key",
+              "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your x-api-key using the 'Profile' tab on the website."
+            },
+            "name": "x-api-key",
+            "in": "header"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/upload_image_post"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties":{
+                    "message":{
+                      "type": "string"
+                    }
+                  },
+                  "example":{
+                    "message": "Image Uploaded succesfully"
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Python",
+            "source": "from playbookNetworkClient import PlaybookClient\n\n def setup(self):\n self.playbookClient = PlaybookClient()\n self.playbookClient.set_api_key({your api key})\n\n def upload_image(self, image: Union[str, bytes]):\n  result = self.playbookClient.upload_image_to_playbook(image)"
+          },
+          {
+            "lang": "JavaScript",
+            "source": ""
+          },
+          {
+            "lang": "C#",
+            "source": "RunWorkflowProperties data =\n\tnew()\n\t{\n\t\tid = {workflow_id},\n\t\torigin = \"2\",\n\t\tinputs = new { },\n\t};"
+          }
+        ]
+      }
+    },
+    "/upload-video":{
+      "post":{
+        "tags": ["upload-video"],
+        "summary": "Upload video",
+        "description": "Uploads video to Playbook3d's servers.",
+        "operationId": "video",
+        "parameters": [
+          {
+            "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your x-api-key using the 'Profile' tab on the website.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "title": "X-Api-Key",
+              "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your x-api-key using the 'Profile' tab on the website."
+            },
+            "name": "x-api-key",
+            "in": "header"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/upload_image_post"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties":{
+                    "message":{
+                      "type": "string"
+                    }
+                  },
+                  "example":{
+                    "message": "Image Uploaded succesfully"
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Python",
+            "source": "from playbookNetworkClient import PlaybookClient\n\n def setup(self):\n self.playbookClient = PlaybookClient()\n self.playbookClient.set_api_key({your api key})\n\n def upload_video(self, video: Union[str, bytes]):\n  result = self.playbookClient.upload_video_to_playbook(video)"
+          },
+          {
+            "lang": "JavaScript",
+            "source": ""
+          },
+          {
+            "lang": "C#",
+            "source": "RunWorkflowProperties data =\n\tnew()\n\t{\n\t\tid = {workflow_id},\n\t\torigin = \"2\",\n\t\tinputs = new { },\n\t};"
+          }
+        ]
+      }
+    },
     "/run-workflow/{team_id}/{run_id}": {
       "post": {
         "tags": ["run-workflow"],
@@ -973,12 +1123,27 @@
           },
           "inputs": {
             "type": "object",
-            "description": ""
+            "description": "Optional array of inputs to override workflow defaults"
           }
         },
         "type": "object",
         "required": ["id", "origin"],
         "title": "run_workflow__voice_id__post"
+      },
+      "upload_image_post": {
+        "properties": {
+          "file_path": {
+            "type": "string",
+            "description": "The file path to upload."
+          },
+          "file":{
+            "type": "object",
+            "description": "File binary to upload"
+          }
+        },
+        "type": "object",
+        "required": [],
+        "title": "upload_image"
       }
     }
   },

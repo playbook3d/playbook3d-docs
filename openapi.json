@@ -117,7 +117,7 @@
         ]
       }
     },
-    "/run-workflow/{team_id}": {
+    "/run-workflow/{team_id}/{run_id}": {
       "post": {
         "tags": ["run-workflow"],
         "summary": "Run Workflow",
@@ -150,7 +150,27 @@
           "200": {
             "description": "Successful Response",
             "content": {
-              "audio/mpeg": {}
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties":{
+                    "run_id":{
+                      "type": "string"
+                    },
+                    "status":{
+                      "type": "string"
+                    },
+                    "message":{
+                      "type": "string"
+                    }
+                  },
+                  "example":{
+                    "run_id": "uuid",
+                    "status": "queued",
+                    "message": "Workflow submitted to ComfyUI Server"
+                  }
+                }
+              }
             }
           },
           "422": {
@@ -167,7 +187,7 @@
         "x-codeSamples": [
           {
             "lang": "Python",
-            "source": ""
+            "source": "from playbookNetworkClient import PlaybookClient\n\n def setup(self):\n self.playbookClient = PlaybookClient()\n self.playbookClient.set_api_key({your api key})\n\n def run_workflow(self, workflow: PlaybookWorkflow):\n  result = self.playbookClient.run_workflow({workflow})"
           },
           {
             "lang": "JavaScript",
@@ -2090,6 +2110,204 @@
           {
             "lang": "JavaScript",
             "source": "const TEAM_ID = '<TEAM_ID>';\nconst WORKFLOW_ID = '<WORKFLOW_ID>';\nconst RUN_ID = 'some-uuid';\n\nfetch(`https://api.playbook3d.com/run_workflow/${TEAM_ID}/${RUN_ID}`, {\n  method: 'POST',\n  headers: {\n    'x-api-key': '<YOUR_API_KEY>',\n    'Authorization': 'Bearer <YOUR_JWT_TOKEN>',\n    'Content-Type': 'application/json'\n  },\n  body: JSON.stringify({\n    id: WORKFLOW_ID,\n    origin: '2',\n    inputs: {}\n  })\n})\n  .then(res => res.json())\n  .then(data => {\n    console.log('Status:', data.status);\n    console.log('Run ID:', data.run_id);\n  })\n  .catch(err => console.error(err));"
+          }
+        ]
+      }
+    },"/users": {
+      "get": {
+        "tags": ["get-users"],
+        "summary": "Gets the current Playbook User",
+        "description": "Gets the current Playbook User",
+        "operationId": "get-users",
+        "parameters": [
+          {
+            "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your x-api-key using the 'Profile' tab on the website.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "X-Api-Key",
+              "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your x-api-key using the 'Profile' tab on the website."
+            },
+            "name": "x-api-key",
+            "in": "header"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema":{
+                  "type":"object",
+                  "properties": {
+                    "id":{
+                      "type":"string"
+                    },
+                    "cognito_id":{
+                      "type":"string"
+                    },
+                    "tier_id":{
+                      "type":"string"
+                    },
+                    "email":{
+                      "type":"string"
+                    },
+                    "status":{
+                      "type":"string"
+                    },
+                    "user_type":{
+                      "type":"string"
+                    },
+                    "name":{
+                      "type":"string"
+                    },
+                    "gpu_usage_total":{
+                      "type":"integer"
+                    },
+                    "gpu_usage_billing_period":{
+                      "type":"integer"
+                    }
+                  },
+                  "example":{
+                    "id": "uuid",
+                    "cognito_id": "uuid",
+                    "tier_id": "uuid",
+                    "email": "user@domain.com",
+                    "status": "Active",
+                    "user_type": "normal",
+                    "name": "John Doe",
+                    "gpu_usage_total": 250,
+                    "gpu_usage_billing_period": 250
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Python",
+            "source": "from playbookNetworkClient import PlaybookClient\n\n def setup(self):\n self.playbookClient = PlaybookClient()\n self.playbookClient.set_api_key({your api key})\n\n def get_user(self):\n  user = self.playbookClient.get_user_data()"
+          },
+          {
+            "lang": "JavaScript",
+            "source": ""
+          },
+          {
+            "lang": "C#",
+            "source": ""
+          }
+        ]
+      }
+    },
+    "/runs": {
+      "get": {
+        "tags": ["runs"],
+        "summary": "Gets all the playbook runs associated with your account",
+        "description": "Gets playbook runs.",
+        "operationId": "get-runs",
+        "parameters": [
+          {
+            "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your x-api-key using the 'Profile' tab on the website.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "X-Api-Key",
+              "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your x-api-key using the 'Profile' tab on the website."
+            },
+            "name": "x-api-key",
+            "in": "header"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "id":{
+                      "type": "string"
+                    },
+                    "platform":{
+                      "type": "string"
+                    },
+                    "status":{
+                      "type": "string"
+                    },
+                    "progress":{
+                      "type": "integer"
+                    },
+                    "duration":{
+                      "type": "integer"
+                    },
+                    "webhook_url":{
+                      "type": "string"
+                    },
+                    "run_result":{
+                      "type": "string"
+                    },
+                    "team":{
+                      "type": "object"
+                    },
+                    "owner":{
+                      "type": "object"
+                    },
+                    "workflow":{
+                      "type": "object"
+                    }
+                  },
+                  "type": "object",
+                  "example": {
+                    "id": "uuid",
+                    "platform": "web",
+                    "status": "Completed",
+                    "progress": 100,
+                    "duration": 5,
+                    "webhook_url": "url",
+                    "run_result": "result url",
+                    "team": {"PlaybookTeam": {}},
+                    "owner": {"PlaybookUser": {}},
+                    "workflow": {"PlaybookWorkflow": {}}
+                  }
+                  
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Python",
+            "source": "from playbookNetworkClient import PlaybookClient\n\n def setup(self):\n self.playbookClient = PlaybookClient()\n self.playbookClient.set_api_key({your api key})\n\n def get_runs(self):\n  teams = self.playbookClient.get_user_runs()"
+          },
+          {
+            "lang": "JavaScript",
+            "source": ""
+          },
+          {
+            "lang": "C#",
+            "source": ""
           }
         ]
       }

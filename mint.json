@@ -45,6 +45,10 @@
     {
       "name": "API Reference",
       "url": "api-reference"
+    },
+    {
+      "name": "ComfyUI Nodes",
+      "url": "comfyui-nodes"
     }
   ],
   "anchors": [
@@ -87,10 +91,15 @@
       ]
     },
     {
+      "group": "Users",
+      "pages": [
+        "api-reference/users/get-users"
+      ]
+    },
+    {
       "group": "Teams",
       "pages": [
-        "api-reference/teams/get-teams",
-        "api-reference/teams/get-teams-team_id"
+        "api-reference/teams/get-teams"
       ]
     },
     {
@@ -105,12 +114,34 @@
       ]
     },
     {
-      "group": "Run",
+      "group": "Runs",
       "pages": [
         "api-reference/run/run-workflow-team_id",
-        "api-reference/run/get_run_id",
-        "api-reference/run/get-run-result_id",
-        "api-reference/run/websocket"
+        "api-reference/run_workflow/get_run_id",
+        "api-reference/run_workflow/get-run-result_id",
+        "api-reference/runs/get-runs"
+      ]
+    },
+    {
+      "group": "Get Started",
+      "pages": ["comfyui-nodes/overview"]
+    },
+    {
+      "group": "ComfyUI Nodes",
+      "pages": [
+        "comfyui-nodes/comfyui-nodes/playbook-text",
+        "comfyui-nodes/comfyui-nodes/playbook-number",
+        "comfyui-nodes/comfyui-nodes/playbook-boolean",
+        "comfyui-nodes/comfyui-nodes/playbook-float",
+        "comfyui-nodes/comfyui-nodes/playbook-image",
+        "comfyui-nodes/comfyui-nodes/playbook-video",
+        "comfyui-nodes/comfyui-nodes/playbook-aspect-ratio-select",
+        "comfyui-nodes/comfyui-nodes/playbook-lora-select",
+        "comfyui-nodes/comfyui-nodes/playbook-seed",
+        "comfyui-nodes/comfyui-nodes/playbook-depth",
+        "comfyui-nodes/comfyui-nodes/playbook-outline",
+        "comfyui-nodes/comfyui-nodes/playbook-mask",
+        "comfyui-nodes/comfyui-nodes/playbook-beauty"
       ]
     }
   ],

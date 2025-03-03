@@ -123,6 +123,13 @@
       ]
     },
     {
+      "group": "Upload Assets",
+      "pages": [
+        "api-reference/uploads/post-image",
+        "api-reference/uploads/post-video"
+      ]
+     },
+    {
       "group": "Get Started",
       "pages": ["comfyui-nodes/overview"]
     },

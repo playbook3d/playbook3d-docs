@@ -116,12 +116,19 @@
     {
       "group": "Runs",
       "pages": [
-        "api-reference/run_workflow/run-workflow-team_id",
+        "api-reference/run/run-workflow-team_id",
         "api-reference/run_workflow/get_run_id",
         "api-reference/run_workflow/get-run-result_id",
-        "api-reference/run/websocket"
+        "api-reference/runs/get-runs"
       ]
     },
+    {
+      "group": "Upload Assets",
+      "pages": [
+        "api-reference/uploads/post-image",
+        "api-reference/uploads/post-video"
+      ]
+     },
     {
       "group": "Get Started",
       "pages": ["comfyui-nodes/overview"]

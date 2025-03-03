@@ -117,7 +117,157 @@
         ]
       }
     },
-    "/run-workflow/{team_id}": {
+    "/upload-image":{
+      "post":{
+        "tags": ["upload-image"],
+        "summary": "Upload image",
+        "description": "Uploads image to Playbook3d's servers.",
+        "operationId": "upload_image",
+        "parameters": [
+          {
+            "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your x-api-key using the 'Profile' tab on the website.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "title": "X-Api-Key",
+              "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your x-api-key using the 'Profile' tab on the website."
+            },
+            "name": "x-api-key",
+            "in": "header"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/upload_image_post"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties":{
+                    "message":{
+                      "type": "string"
+                    }
+                  },
+                  "example":{
+                    "message": "Image Uploaded succesfully"
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Python",
+            "source": "from playbookNetworkClient import PlaybookClient\n\n def setup(self):\n self.playbookClient = PlaybookClient()\n self.playbookClient.set_api_key({your api key})\n\n def upload_image(self, image: Union[str, bytes]):\n  result = self.playbookClient.upload_image_to_playbook(image)"
+          },
+          {
+            "lang": "JavaScript",
+            "source": ""
+          },
+          {
+            "lang": "C#",
+            "source": "RunWorkflowProperties data =\n\tnew()\n\t{\n\t\tid = {workflow_id},\n\t\torigin = \"2\",\n\t\tinputs = new { },\n\t};"
+          }
+        ]
+      }
+    },
+    "/upload-video":{
+      "post":{
+        "tags": ["upload-video"],
+        "summary": "Upload video",
+        "description": "Uploads video to Playbook3d's servers.",
+        "operationId": "video",
+        "parameters": [
+          {
+            "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your x-api-key using the 'Profile' tab on the website.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "title": "X-Api-Key",
+              "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your x-api-key using the 'Profile' tab on the website."
+            },
+            "name": "x-api-key",
+            "in": "header"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/upload_image_post"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties":{
+                    "message":{
+                      "type": "string"
+                    }
+                  },
+                  "example":{
+                    "message": "Image Uploaded succesfully"
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Python",
+            "source": "from playbookNetworkClient import PlaybookClient\n\n def setup(self):\n self.playbookClient = PlaybookClient()\n self.playbookClient.set_api_key({your api key})\n\n def upload_video(self, video: Union[str, bytes]):\n  result = self.playbookClient.upload_video_to_playbook(video)"
+          },
+          {
+            "lang": "JavaScript",
+            "source": ""
+          },
+          {
+            "lang": "C#",
+            "source": "RunWorkflowProperties data =\n\tnew()\n\t{\n\t\tid = {workflow_id},\n\t\torigin = \"2\",\n\t\tinputs = new { },\n\t};"
+          }
+        ]
+      }
+    },
+    "/run-workflow/{team_id}/{run_id}": {
       "post": {
         "tags": ["run-workflow"],
         "summary": "Run Workflow",
@@ -150,7 +300,27 @@
           "200": {
             "description": "Successful Response",
             "content": {
-              "audio/mpeg": {}
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties":{
+                    "run_id":{
+                      "type": "string"
+                    },
+                    "status":{
+                      "type": "string"
+                    },
+                    "message":{
+                      "type": "string"
+                    }
+                  },
+                  "example":{
+                    "run_id": "uuid",
+                    "status": "queued",
+                    "message": "Workflow submitted to ComfyUI Server"
+                  }
+                }
+              }
             }
           },
           "422": {
@@ -167,7 +337,7 @@
         "x-codeSamples": [
           {
             "lang": "Python",
-            "source": ""
+            "source": "from playbookNetworkClient import PlaybookClient\n\n def setup(self):\n self.playbookClient = PlaybookClient()\n self.playbookClient.set_api_key({your api key})\n\n def run_workflow(self, workflow: PlaybookWorkflow):\n  result = self.playbookClient.run_workflow({workflow})"
           },
           {
             "lang": "JavaScript",
@@ -187,66 +357,66 @@
     "/get_run_id": {
       "get": {
         "tags": ["run-workflow"],
-        "summary": "Run Workflow",
-        "description": "Runs specified workflow.",
-        "operationId": "run_workflow",
+        "summary": "Retrieve a new Run ID",
+        "description": "Returns a fresh run_id (UUID) that you can use to identify or track a workflow execution.",
+        "operationId": "get_run_id",
         "parameters": [
           {
-            "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your x-api-key using the 'Profile' tab on the website.",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "title": "X-Api-Key",
-              "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your x-api-key using the 'Profile' tab on the website."
-            },
             "name": "x-api-key",
-            "in": "header"
+            "in": "header",
+            "description": "Your API key. Required by most endpoints for programmatic access. Viewable in 'Profile' tab on the website.",
+            "required": true,
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer token for authentication (JWT).",
+            "required": true,
+            "schema": { "type": "string" }
           }
         ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/run_workflow_post"
-              }
-            }
-          },
-          "required": true
-        },
         "responses": {
           "200": {
-            "description": "Successful Response",
-            "content": {
-              "audio/mpeg": {}
-            }
-          },
-          "422": {
-            "description": "Validation Error",
+            "description": "OK. Successfully retrieved a run ID.",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
+                  "type": "object",
+                  "properties": {
+                    "run_id": {
+                      "type": "string",
+                      "format": "uuid",
+                      "description": "Newly generated run ID (UUID)."
+                    }
+                  },
+                  "example": {
+                    "run_id": "3fa85f64-5717-4752-b3fc-2c963f66aga6"
+                  }
                 }
               }
             }
+          },
+          "401": {
+            "description": "Unauthorized. Check your API key or token."
+          },
+          "402": {
+            "description": "Payment required. Subscription or plan issue."
+          },
+          "403": {
+            "description": "Forbidden. You lack permission to perform this action."
+          },
+          "404": {
+            "description": "Resource not found."
+          },
+          "500": {
+            "description": "Internal Server Error. Something went wrong on the server."
           }
         },
         "x-codeSamples": [
           {
-            "lang": "Python",
-            "source": ""
-          },
-          {
-            "lang": "JavaScript",
-            "source": ""
-          },
-          {
-            "lang": "C#",
-            "source": "RunWorkflowProperties data =\n\tnew()\n\t{\n\t\tid = {workflow_id},\n\t\torigin = \"2\",\n\t\tinputs = new { },\n\t};"
-          },
-          {
             "lang": "cURL",
-            "source": "curl -X GET \\\n  -H 'Authorization: Bearer $API_KEY' \\\n  -H 'Accept: application/json' \\\n  '$BASE_URL/get_run_id'"
+            "source": "curl -X GET \\\n  -H 'Authorization: Bearer <YOUR_JWT>' \\\n  -H 'Accept: application/json' \\\n  'https://api.playbook3d.com/get_run_id'"
           }
         ]
       }
@@ -858,7 +1028,6 @@
                       "type": "string",
                       "description": "Current owner UUID after update (if changed)."
                     }
-                    // ... other fields
                   },
                   "example": {
                     "id": "123e4567-e89b-12d3-a456-426614174000",
@@ -1931,6 +2100,367 @@
           }
         ]
       }
+    },
+    "/run_workflow/{team_id}/{run_id}": {
+      "post": {
+        "tags": ["run-workflow"],
+        "summary": "Run a Specified Workflow",
+        "description": "Enqueues or starts a run of the given workflow ID under the specified team and run ID. The `origin` field determines the calling context (e.g. '2' for Unity).",
+        "operationId": "run_workflow",
+        "parameters": [
+          {
+            "name": "team_id",
+            "in": "path",
+            "description": "The team UUID to which this run will be associated.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "run_id",
+            "in": "path",
+            "description": "A unique run UUID for identifying this workflow execution. Generated automatically if not supplied by user.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "description": "Your API key. This is required by most endpoints for programmatic access. You can view your x-api-key in the 'Profile' tab.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer token for authentication (JWT).",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The workflow ID and optional origin and inputs for the run.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "description": "The workflow's unique UUID."
+                  },
+                  "origin": {
+                    "type": "string",
+                    "description": "Indicates the caller context (e.g., '2' for Unity SDK)."
+                  },
+                  "inputs": {
+                    "type": "object",
+                    "description": "Any JSON data you want to pass into the workflow."
+                  }
+                },
+                "example": {
+                  "id": "b8ba9786-75aa-471d-baf2-7d0446b3f4b4",
+                  "origin": "2",
+                  "inputs": {}
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Workflow queued successfully. The response body typically includes run status info.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "run_id": {
+                      "type": "string",
+                      "format": "uuid",
+                      "description": "The unique run ID."
+                    },
+                    "status": {
+                      "type": "string",
+                      "description": "Status of the newly queued workflow."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Optional success/failure message."
+                    }
+                  },
+                  "example": {
+                    "run_id": "eb49c4e2-e9c5-4202-aea2-86dd31493621",
+                    "status": "queued",
+                    "message": "Workflow queued successfully."
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error. The request body or parameters are malformed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "detail": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    }
+                  },
+                  "example": {
+                    "detail": [
+                      {
+                        "loc": ["body", "id"],
+                        "msg": "field required",
+                        "type": "value_error"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized. The bearer token or API key is invalid."
+          },
+          "403": {
+            "description": "Forbidden. User does not have permission to perform this operation."
+          },
+          "404": {
+            "description": "Not Found. The resource (team, run, or workflow) does not exist."
+          },
+          "500": {
+            "description": "Internal Server Error. Something unexpected happened."
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "cURL",
+            "source": "curl -X POST \\\n  -H 'x-api-key: <YOUR_API_KEY>' \\\n  -H 'Authorization: Bearer <YOUR_JWT_TOKEN>' \\\n  -H 'Content-Type: application/json' \\\n  -d '{ \"id\": \"<WORKFLOW_ID>\", \"origin\": \"2\", \"inputs\": {} }' \\\n  'https://api.playbook3d.com/run_workflow/<TEAM_ID>/<RUN_ID>'"
+          },
+          {
+            "lang": "Python",
+            "source": "import requests\nimport uuid\n\nTEAM_ID = \"<TEAM_ID>\"\nWORKFLOW_ID = \"<WORKFLOW_ID>\"\nRUN_ID = str(uuid.uuid4())\n\npayload = {\n    \"id\": WORKFLOW_ID,\n    \"origin\": \"2\",\n    \"inputs\": {}\n}\n\nheaders = {\n    \"x-api-key\": \"<YOUR_API_KEY>\",\n    \"Authorization\": \"Bearer <YOUR_JWT_TOKEN>\",\n    \"Content-Type\": \"application/json\"\n}\n\nurl = f\"https://api.playbook3d.com/run_workflow/{TEAM_ID}/{RUN_ID}\"\nresp = requests.post(url, json=payload, headers=headers)\nprint(resp.status_code, resp.json())"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const TEAM_ID = '<TEAM_ID>';\nconst WORKFLOW_ID = '<WORKFLOW_ID>';\nconst RUN_ID = 'some-uuid';\n\nfetch(`https://api.playbook3d.com/run_workflow/${TEAM_ID}/${RUN_ID}`, {\n  method: 'POST',\n  headers: {\n    'x-api-key': '<YOUR_API_KEY>',\n    'Authorization': 'Bearer <YOUR_JWT_TOKEN>',\n    'Content-Type': 'application/json'\n  },\n  body: JSON.stringify({\n    id: WORKFLOW_ID,\n    origin: '2',\n    inputs: {}\n  })\n})\n  .then(res => res.json())\n  .then(data => {\n    console.log('Status:', data.status);\n    console.log('Run ID:', data.run_id);\n  })\n  .catch(err => console.error(err));"
+          }
+        ]
+      }
+    },"/users": {
+      "get": {
+        "tags": ["get-users"],
+        "summary": "Gets the current Playbook User",
+        "description": "Gets the current Playbook User",
+        "operationId": "get-users",
+        "parameters": [
+          {
+            "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your x-api-key using the 'Profile' tab on the website.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "X-Api-Key",
+              "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your x-api-key using the 'Profile' tab on the website."
+            },
+            "name": "x-api-key",
+            "in": "header"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema":{
+                  "type":"object",
+                  "properties": {
+                    "id":{
+                      "type":"string"
+                    },
+                    "cognito_id":{
+                      "type":"string"
+                    },
+                    "tier_id":{
+                      "type":"string"
+                    },
+                    "email":{
+                      "type":"string"
+                    },
+                    "status":{
+                      "type":"string"
+                    },
+                    "user_type":{
+                      "type":"string"
+                    },
+                    "name":{
+                      "type":"string"
+                    },
+                    "gpu_usage_total":{
+                      "type":"integer"
+                    },
+                    "gpu_usage_billing_period":{
+                      "type":"integer"
+                    }
+                  },
+                  "example":{
+                    "id": "uuid",
+                    "cognito_id": "uuid",
+                    "tier_id": "uuid",
+                    "email": "user@domain.com",
+                    "status": "Active",
+                    "user_type": "normal",
+                    "name": "John Doe",
+                    "gpu_usage_total": 250,
+                    "gpu_usage_billing_period": 250
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Python",
+            "source": "from playbookNetworkClient import PlaybookClient\n\n def setup(self):\n self.playbookClient = PlaybookClient()\n self.playbookClient.set_api_key({your api key})\n\n def get_user(self):\n  user = self.playbookClient.get_user_data()"
+          },
+          {
+            "lang": "JavaScript",
+            "source": ""
+          },
+          {
+            "lang": "C#",
+            "source": ""
+          }
+        ]
+      }
+    },
+    "/runs": {
+      "get": {
+        "tags": ["runs"],
+        "summary": "Gets all the playbook runs associated with your account",
+        "description": "Gets playbook runs.",
+        "operationId": "get-runs",
+        "parameters": [
+          {
+            "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your x-api-key using the 'Profile' tab on the website.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "X-Api-Key",
+              "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your x-api-key using the 'Profile' tab on the website."
+            },
+            "name": "x-api-key",
+            "in": "header"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "id":{
+                      "type": "string"
+                    },
+                    "platform":{
+                      "type": "string"
+                    },
+                    "status":{
+                      "type": "string"
+                    },
+                    "progress":{
+                      "type": "integer"
+                    },
+                    "duration":{
+                      "type": "integer"
+                    },
+                    "webhook_url":{
+                      "type": "string"
+                    },
+                    "run_result":{
+                      "type": "string"
+                    },
+                    "team":{
+                      "type": "object"
+                    },
+                    "owner":{
+                      "type": "object"
+                    },
+                    "workflow":{
+                      "type": "object"
+                    }
+                  },
+                  "type": "object",
+                  "example": {
+                    "id": "uuid",
+                    "platform": "web",
+                    "status": "Completed",
+                    "progress": 100,
+                    "duration": 5,
+                    "webhook_url": "url",
+                    "run_result": "result url",
+                    "team": {"PlaybookTeam": {}},
+                    "owner": {"PlaybookUser": {}},
+                    "workflow": {"PlaybookWorkflow": {}}
+                  }
+                  
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Python",
+            "source": "from playbookNetworkClient import PlaybookClient\n\n def setup(self):\n self.playbookClient = PlaybookClient()\n self.playbookClient.set_api_key({your api key})\n\n def get_runs(self):\n  teams = self.playbookClient.get_user_runs()"
+          },
+          {
+            "lang": "JavaScript",
+            "source": ""
+          },
+          {
+            "lang": "C#",
+            "source": ""
+          }
+        ]
+      }
     }
   },
   "components": {
@@ -1960,12 +2490,27 @@
           },
           "inputs": {
             "type": "object",
-            "description": ""
+            "description": "Optional array of inputs to override workflow defaults"
           }
         },
         "type": "object",
         "required": ["id", "origin"],
         "title": "run_workflow__voice_id__post"
+      },
+      "upload_image_post": {
+        "properties": {
+          "file_path": {
+            "type": "string",
+            "description": "The file path to upload."
+          },
+          "file":{
+            "type": "object",
+            "description": "File binary to upload"
+          }
+        },
+        "type": "object",
+        "required": [],
+        "title": "upload_image"
       }
     }
   },

@@ -56,12 +56,16 @@ scene using generative diffusion models.
     <Step title="Select your team + workflow">
         Once you enter Play mode in Unity, the `Teams` and `Workflows` properties will be populated with your respective
         teams and workflows. Select the ones you want to work with.
+
+        <Warning>
+            Note that you will need to exit and re-enter Play mode to refresh teams and workflows.
+        </Warning>
     </Step>
 
     <Step title="Start capturing">
         You can now start capturing a single frame or an image sequence by clicking the buttons.
 
-        You can check if your workflow was received by our servers by opening up the workflow you selected in the [Playbook Editor](https://beta.playbook3d.com).
+        You can check if your workflow was received by our servers by opening up the workflow you selected in the [Playbook Dashboard](https://beta.playbook3d.com).
         Open up your browser's console and you should receive a queued run:
 
         <Frame>![Web Editor Console](../../images/UnitySDK/WebEditorConsole.png)</Frame>
@@ -77,7 +81,7 @@ scene using generative diffusion models.
 
 </Steps>
 
-## The Mask Pass
+## Adding to Mask Pass
 
 You can further customize your renders by manipulating the mask pass.
 To add or remove GameObjects from mask groups, you can call the following methods:
@@ -117,43 +121,36 @@ PlaybookSDK.RemoveBackgroundMaskGroup();
   group for objects that are not part of a mask group.
 </Note>
 
+## Listening to Results Received
+
+To listen to workflow results when they are received, you can subscribe to `ResultReceived()` given in `PlaybookSDK.cs`, which returns the result as a url `string`.
+
+```cs
+    private void OnEnable()
+    {
+        PlaybookSDK.ResultReceived += EventToDoWhenReceived;
+    }
+
+    private void OnDisable()
+    {
+        PlaybookSDK.ResultReceived -= EventToDoWhenReceived;
+    }
+```
+
 ## Overriding Node Inputs
 
 If you would like to manually override node inputs, you can do so by using `OverrideNodeInputs()`
-given in `PlaybookNetwork.cs`.
+given in `PlaybookSDK.cs`.
 
-To call `OverrideNodeInputs()`, you must provide at least 3 parameters:
-
-1. The input dictionary as a reference
-   - The dictionary will already be provided to you in `RunWorkflow()`
-2. The ID of the node you would like to override
-3. The new value of the given node
-4. (Optional) Any trigger words to pass into the given node
+To call `OverrideNodeInputs()`, you must provide a dictionary on inputs to override the desired Playbook nodes in your selected workflow, where the `key` is the node ID and the `value` is the new value. For example:
 
 ```cs
-OverrideNodeInputs(ref inputs, nodeId: "4", value: "Hello World!");
+Dictionary<string, object> inputs = new Dictionary<string, object> {
+                ["11"] = "cats in outer space",
+            };
+PlaybookSDK.OverrideNodeInputs(inputs);
 ```
 
-This method should be called before inputs are passed in as `RunWorkflowProperties` in `RunWorkflow()`
+Dashboard display of node IDs per workflow is in progress. Currently, node IDs can be found by opening browser console in the [Playbook Dashboard](https://beta.playbook3d.com) and searching for `"Playbook Nodes:"`.
 
-```cs
-private IEnumerator RunWorkflow(string accessToken)
-{
-    string url = $"{_apiBaseURL}{RunWorkflowEndpoint}{GetCurrentSelectedWorkflow().team_id}";
-
-    Dictionary<string, object> inputs = new();
-
-    // Add any overrides here
-    OverrideNodeInputs(ref inputs, "4", "Hello World!");
-
-    RunWorkflowProperties data =
-        new()
-        {
-            id = GetCurrentSelectedWorkflow().id,
-            origin = "2",
-            inputs = inputs,
-        };
-
-    ...
-}
-```
+<Frame> ![Find Node IDs](../../images/UnitySDK/NodeIDs.png)</Frame>

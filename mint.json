@@ -45,6 +45,10 @@
     {
       "name": "API Reference",
       "url": "api-reference"
+    },
+    {
+      "name": "ComfyUI Nodes",
+      "url": "comfyui-nodes"
     }
   ],
   "anchors": [
@@ -121,6 +125,28 @@
       "pages": [
         "api-reference/uploads/post-image",
         "api-reference/uploads/post-video"
+      ]
+     },
+    {
+      "group": "Get Started",
+      "pages": ["comfyui-nodes/overview"]
+    },
+    {
+      "group": "ComfyUI Nodes",
+      "pages": [
+        "comfyui-nodes/comfyui-nodes/playbook-text",
+        "comfyui-nodes/comfyui-nodes/playbook-number",
+        "comfyui-nodes/comfyui-nodes/playbook-boolean",
+        "comfyui-nodes/comfyui-nodes/playbook-float",
+        "comfyui-nodes/comfyui-nodes/playbook-image",
+        "comfyui-nodes/comfyui-nodes/playbook-video",
+        "comfyui-nodes/comfyui-nodes/playbook-aspect-ratio-select",
+        "comfyui-nodes/comfyui-nodes/playbook-lora-select",
+        "comfyui-nodes/comfyui-nodes/playbook-seed",
+        "comfyui-nodes/comfyui-nodes/playbook-depth",
+        "comfyui-nodes/comfyui-nodes/playbook-outline",
+        "comfyui-nodes/comfyui-nodes/playbook-mask",
+        "comfyui-nodes/comfyui-nodes/playbook-beauty"
       ]
     }
   ],

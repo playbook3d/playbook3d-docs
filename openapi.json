@@ -1397,12 +1397,28 @@
                   },
                   "example": [
                     {
-                      "id": "14ac2bd4-833c-4baa-bb03-7395463197bd",
-                      "name": "My Example Workflow"
+                      "id": "c5247e83-95ad-421f-b38c-f3c645a91de7",
+                      "name": "Customer Onboarding Flow",
+                      "owner_id": "7631a8e2-509f-4d17-b5a2-e84bca57f1d6",
+                      "team_id": "25974c31-28dd-45f0-93fb-82c7a409e358",
+                      "editing_user_id": "7631a8e2-509f-4d17-b5a2-e84bca57f1d6",
+                      "is_external": false,
+                      "canvas_type": 0,
+                      "public": true,
+                      "created_at": "2025-01-15T14:37:22.451Z",
+                      "updated_at": "2025-01-15T16:23:45.892Z"
                     },
                     {
-                      "id": "c613ad9f-99e2-4de2-8fda-737612fb5c13",
-                      "name": "Another Workflow"
+                      "id": "87d1b935-a6e1-48f3-b407-f29a5d3c6e08",
+                      "name": "Document Processing Workflow",
+                      "owner_id": "7631a8e2-509f-4d17-b5a2-e84bca57f1d6",
+                      "team_id": "25974c31-28dd-45f0-93fb-82c7a409e358",
+                      "editing_user_id": "7631a8e2-509f-4d17-b5a2-e84bca57f1d6",
+                      "is_external": false,
+                      "canvas_type": 0,
+                      "public": false,
+                      "created_at": "2025-01-12T10:21:45.123Z",
+                      "updated_at": "2025-01-13T09:15:32.447Z"
                     }
                   ]
                 }
@@ -1508,7 +1524,7 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
-            "source": "curl -X GET \\\n  -H 'Authorization: Bearer $API_KEY' \\\n  -H 'Accept: application/json' \\\n  '$BASE_URL/workflows'"
+            "source": "curl -X GET \\\n  -H 'Authorization: Bearer $JWT_TOKEN' \\\n  -H 'x-api-key: $X-API-KEY' \\\n  -H 'Accept: application/json' \\\n  '$BASE_URL/workflows/$WORKFLOW_ID'"
           },
           {
             "lang": "Python",
@@ -1579,11 +1595,11 @@
                   }
                 },
                 "example": {
-                  "name": "My Scripted Workflow",
-                  "team_id": "41480ee5-14ff-4f9e-89bf-9750a8e30e77",
+                  "name": "Customer Journey Analysis",
+                  "team_id": "25974c31-28dd-45f0-93fb-82c7a409e358",
                   "is_external": false,
                   "canvas_type": 0,
-                  "public": false
+                  "public": true
                 }
               }
             }
@@ -1599,16 +1615,64 @@
                   "properties": {
                     "id": {
                       "type": "string",
-                      "description": "The newly created workflow’s UUID."
+                      "description": "The newly created workflow's UUID."
                     },
                     "name": {
                       "type": "string",
                       "description": "Name of the newly created workflow."
+                    },
+                    "owner_id": {
+                      "type": "string",
+                      "description": "UUID of the workflow owner."
+                    },
+                    "team_id": {
+                      "type": "string",
+                      "description": "UUID of the associated team."
+                    },
+                    "editing_user_id": {
+                      "type": "string",
+                      "description": "UUID of the user currently editing the workflow."
+                    },
+                    "is_external": {
+                      "type": "boolean",
+                      "description": "Whether the workflow is external."
+                    },
+                    "canvas_type": {
+                      "type": "integer",
+                      "description": "Type of canvas used for the workflow."
+                    },
+                    "public": {
+                      "type": "boolean",
+                      "description": "Whether the workflow is public."
+                    },
+                    "created_at": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "Timestamp when the workflow was created."
+                    },
+                    "updated_at": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "Timestamp when the workflow was last updated."
                     }
                   },
                   "example": {
-                    "id": "d0763222-8f38-46aa-a96e-2532038e49b8",
-                    "name": "My Scripted Workflow"
+                    "id": "c5247e83-95ad-421f-b38c-f3c645a91de7",
+                    "name": "Customer Journey Analysis",
+                    "owner_id": "7631a8e2-509f-4d17-b5a2-e84bca57f1d6",
+                    "team_id": "25974c31-28dd-45f0-93fb-82c7a409e358",
+                    "editing_user_id": null,
+                    "last_edited": null,
+                    "workflow_url": null,
+                    "workflow_api_url": null,
+                    "is_external": false,
+                    "s3_file_id": null,
+                    "canvas_type": 0,
+                    "public_url": null,
+                    "public": true,
+                    "created_at": "2025-01-15T14:37:22.451Z",
+                    "updated_at": "2025-01-15T14:37:22.451Z",
+                    "soft_deleted_at": null
                   }
                 }
               }
@@ -1623,16 +1687,64 @@
                   "properties": {
                     "id": {
                       "type": "string",
-                      "description": "The newly created workflow’s UUID."
+                      "description": "The newly created workflow's UUID."
                     },
                     "name": {
                       "type": "string",
                       "description": "Name of the newly created workflow."
+                    },
+                    "owner_id": {
+                      "type": "string",
+                      "description": "UUID of the workflow owner."
+                    },
+                    "team_id": {
+                      "type": "string",
+                      "description": "UUID of the associated team."
+                    },
+                    "editing_user_id": {
+                      "type": "string",
+                      "description": "UUID of the user currently editing the workflow."
+                    },
+                    "is_external": {
+                      "type": "boolean",
+                      "description": "Whether the workflow is external."
+                    },
+                    "canvas_type": {
+                      "type": "integer",
+                      "description": "Type of canvas used for the workflow."
+                    },
+                    "public": {
+                      "type": "boolean",
+                      "description": "Whether the workflow is public."
+                    },
+                    "created_at": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "Timestamp when the workflow was created."
+                    },
+                    "updated_at": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "Timestamp when the workflow was last updated."
                     }
                   },
                   "example": {
-                    "id": "d0763222-8f38-46aa-a96e-2532038e49b8",
-                    "name": "My Scripted Workflow"
+                    "id": "c5247e83-95ad-421f-b38c-f3c645a91de7",
+                    "name": "Customer Journey Analysis",
+                    "owner_id": "7631a8e2-509f-4d17-b5a2-e84bca57f1d6",
+                    "team_id": "25974c31-28dd-45f0-93fb-82c7a409e358",
+                    "editing_user_id": null,
+                    "last_edited": null,
+                    "workflow_url": null,
+                    "workflow_api_url": null,
+                    "is_external": false,
+                    "s3_file_id": null,
+                    "canvas_type": 0,
+                    "public_url": null,
+                    "public": true,
+                    "created_at": "2025-01-15T14:37:22.451Z",
+                    "updated_at": "2025-01-15T14:37:22.451Z",
+                    "soft_deleted_at": null
                   }
                 }
               }
@@ -1737,19 +1849,19 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
-            "source": "curl -X POST \\\n  -H 'Authorization: Bearer $API_KEY' \\\n  -H 'Content-Type: application/json' \\\n  -H 'Accept: application/json' \\\n  -d '{\"name\": \"My Scripted Workflow\", \"team_id\": \"YOUR_TEAM_ID\", \"is_external\": false, \"canvas_type\": 0, \"public\": false}' \\\n  '$BASE_URL/workflows'"
+            "source": "curl -X POST \\\n  -H 'Authorization: Bearer $JWT_TOKEN' \\\n  -H 'x-api-key: $X-API-KEY' \\\n  -H 'Content-Type: application/json' \\\n  -H 'Accept: application/json' \\\n  -d '{\"name\": \"Customer Journey Analysis\", \"team_id\": \"25974c31-28dd-45f0-93fb-82c7a409e358\", \"is_external\": false, \"canvas_type\": 0, \"public\": true}' \\\n  '$BASE_URL/workflows'"
           },
           {
             "lang": "Python",
-            "source": "import requests\n\nheaders = {\n  'x-api-key': '<YOUR_API_KEY>',\n  'Authorization': 'Bearer <YOUR_JWT_TOKEN>',\n  'Content-Type': 'application/json',\n  'Accept': 'application/json'\n}\ndata = {\n  'name': 'My Scripted Workflow',\n  'team_id': '41480ee5-14ff-4f9e-89bf-91b0a8e50e77',\n  'is_external': False,\n  'canvas_type': 0,\n  'public': False\n}\n\nresp = requests.post('https://accounts.playbook3d.com/workflows', json=data, headers=headers)\nprint(resp.status_code, resp.json())"
+            "source": "import requests\n\nheaders = {\n  'x-api-key': '$X-API-KEY',\n  'Authorization': 'Bearer $JWT_TOKEN',\n  'Content-Type': 'application/json',\n  'Accept': 'application/json'\n}\ndata = {\n  'name': 'Customer Journey Analysis',\n  'team_id': '25974c31-28dd-45f0-93fb-82c7a409e358',\n  'is_external': False,\n  'canvas_type': 0,\n  'public': True\n}\n\nresp = requests.post('$BASE_URL/workflows', json=data, headers=headers)\nprint(resp.status_code, resp.json())"
           },
           {
             "lang": "JavaScript",
-            "source": "fetch('https://accounts.playbook3d.com/workflows', {\n  method: 'POST',\n  headers: {\n    'x-api-key': '<YOUR_API_KEY>',\n    'Authorization': 'Bearer <YOUR_JWT_TOKEN>',\n    'Content-Type': 'application/json',\n    'Accept': 'application/json'\n  },\n  body: JSON.stringify({\n    name: 'My Scripted Workflow',\n    team_id: '41480ee5-14ff-4f9e-89bf-91b0a8e50e77',\n    is_external: false,\n    canvas_type: 0,\n    public: false\n  })\n})\n  .then(res => res.json())\n  .then(data => console.log(data))\n  .catch(err => console.error(err));"
+            "source": "fetch('$BASE_URL/workflows', {\n  method: 'POST',\n  headers: {\n    'x-api-key': '$X-API-KEY',\n    'Authorization': 'Bearer $JWT_TOKEN',\n    'Content-Type': 'application/json',\n    'Accept': 'application/json'\n  },\n  body: JSON.stringify({\n    name: 'Customer Journey Analysis',\n    team_id: '25974c31-28dd-45f0-93fb-82c7a409e358',\n    is_external: false,\n    canvas_type: 0,\n    public: true\n  })\n})\n  .then(res => res.json())\n  .then(data => console.log(data))\n  .catch(err => console.error(err));"
           },
           {
             "lang": "C#",
-            "source": "// Using HttpClient\nHttpClient client = new HttpClient();\nclient.DefaultRequestHeaders.Add(\"x-api-key\", \"<YOUR_API_KEY>\");\nclient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(\"Bearer\", \"<YOUR_JWT_TOKEN>\");\n\nvar newWorkflow = new {\n    name = \"My Scripted Workflow\",\n    team_id = \"41480ee5-14ff-4f9e-89bf-91b0a8e50e77\",\n    is_external = false,\n    canvas_type = 0,\n    _public = false\n};\n\nvar content = new StringContent(\n    JsonConvert.SerializeObject(newWorkflow), Encoding.UTF8, \"application/json\");\nvar response = await client.PostAsync(\"https://accounts.playbook3d.com/workflows\", content);\nstring respContent = await response.Content.ReadAsStringAsync();\nConsole.WriteLine(response.StatusCode);\nConsole.WriteLine(respContent);"
+            "source": "// Using HttpClient\nHttpClient client = new HttpClient();\nclient.DefaultRequestHeaders.Add(\"x-api-key\", \"$X-API-KEY\");\nclient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(\"Bearer\", \"$JWT_TOKEN\");\n\nvar newWorkflow = new {\n    name = \"Customer Journey Analysis\",\n    team_id = \"25974c31-28dd-45f0-93fb-82c7a409e358\",\n    is_external = false,\n    canvas_type = 0,\n    _public = true\n};\n\nvar content = new StringContent(\n    JsonConvert.SerializeObject(newWorkflow), Encoding.UTF8, \"application/json\");\nvar response = await client.PostAsync(\"$BASE_URL/workflows\", content);\nstring respContent = await response.Content.ReadAsStringAsync();\nConsole.WriteLine(response.StatusCode);\nConsole.WriteLine(respContent);"
           }
         ]
       }

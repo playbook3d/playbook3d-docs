@@ -2560,7 +2560,7 @@
           }
         ]
       }
-     },"/users": {
+      },"/users": {
       "get": {
         "tags": ["get-users"],
         "summary": "Gets the current Playbook User",

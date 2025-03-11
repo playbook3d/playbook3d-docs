@@ -2219,7 +2219,7 @@
         ]
       }
      },
-    "/teams/{team_id}": {
+     "/teams/{team_id}": {
       "get": {
         "tags": ["teams"],
         "summary": "Get Team by ID",
@@ -2263,18 +2263,61 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "team": {
-                      "type": "object",
-                      "description": "Full team object. Fields vary depending on your model."
+                    "id": {
+                      "type": "string",
+                      "description": "Team's unique ID (UUID)."
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "Team's name."
+                    },
+                    "owner_id": {
+                      "type": "string",
+                      "description": "UUID of the team owner."
+                    },
+                    "has_active_subscription": {
+                      "type": "boolean",
+                      "description": "Whether the team has an active subscription."
+                    },
+                    "subscription_tier_id": {
+                      "type": "string",
+                      "description": "UUID of the subscription tier."
+                    },
+                    "gpu_usage_total": {
+                      "type": "string",
+                      "description": "Total GPU usage for the team."
+                    },
+                    "gpu_usage_billing_period": {
+                      "type": "string",
+                      "description": "GPU usage for the current billing period."
+                    },
+                    "created_at": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "Timestamp when the team was created."
+                    },
+                    "updated_at": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "Timestamp when the team was last updated."
                     }
                   },
                   "example": {
-                    "team": {
-                      "id": "41480ee5-14ff-4f9e-89bf-91b0a8e50e77",
-                      "name": "Example Team",
-                      "owner_id": "01bf560-20c1-703b-99bc-4dc65288811b",
-                      "created_at": "2024-11-04T12:34:56Z"
-                    }
+                    "id": "25974c31-28dd-45e0-93fb-82c7d409e358",
+                    "name": "Enterprise Solutions",
+                    "owner_id": "7631a8e2-509f-4d17-b5a2-e84bca57f1d6",
+                    "api_key": null,
+                    "last_login": null,
+                    "gpu_usage_total": "175.50",
+                    "gpu_usage_billing_period": "175.50",
+                    "subscription_tier_id": "87c3e512-f9b7-4e26-a03c-c94d5a8f2d38",
+                    "stripe_customer_id": "cus_Th7KpM9LqV3zRd",
+                    "stripe_subscription_id": "sub_1QpT5dJT8lEcs8cMPqL9jHk3",
+                    "has_active_subscription": true,
+                    "created_at": "2024-11-15T14:22:31.782Z",
+                    "updated_at": "2025-02-20T09:43:12.489Z",
+                    "soft_deleted_at": null,
+                    "credits": 2500
                   }
                 }
               }
@@ -2379,23 +2422,23 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
-            "source": "curl -X GET \\\n  -H 'Authorization: Bearer $API_KEY' \\\n  -H 'Accept: application/json' \\\n  '$BASE_URL/teams/$team_id'"
+            "source": "curl -X GET \\\n  -H 'Authorization: Bearer $JWT_TOKEN' \\\n  -H 'x-api-key: $X-API-KEY' \\\n  -H 'Accept: application/json' \\\n  '$BASE_URL/teams/$TEAM_ID'"
           },
           {
             "lang": "Python",
-            "source": "import requests\n\nheaders = {\n    'x-api-key': '<YOUR_API_KEY>',\n    'Authorization': 'Bearer <YOUR_JWT_TOKEN>',\n    'Accept': 'application/json'\n}\nresp = requests.get(f\"https://accounts.playbook3d.com/teams/{team_id}\", headers=headers)\nprint(resp.status_code, resp.json())"
+            "source": "import requests\n\nheaders = {\n    'x-api-key': '$X-API-KEY',\n    'Authorization': 'Bearer $JWT_TOKEN',\n    'Accept': 'application/json'\n}\nresp = requests.get(f\"$BASE_URL/teams/$TEAM_ID\", headers=headers)\nprint(resp.status_code, resp.json())"
           },
           {
             "lang": "JavaScript",
-            "source": "fetch(`https://accounts.playbook3d.com/teams/${team_id}`, {\n  method: 'GET',\n  headers: {\n    'x-api-key': '<YOUR_API_KEY>',\n    'Authorization': 'Bearer <YOUR_JWT_TOKEN>',\n    'Accept': 'application/json'\n  }\n}).then(res => res.json())\n  .then(data => console.log(data))\n  .catch(err => console.error(err));"
+            "source": "fetch(`$BASE_URL/teams/$TEAM_ID`, {\n  method: 'GET',\n  headers: {\n    'x-api-key': '$X-API-KEY',\n    'Authorization': 'Bearer $JWT_TOKEN',\n    'Accept': 'application/json'\n  }\n}).then(res => res.json())\n  .then(data => console.log(data))\n  .catch(err => console.error(err));"
           },
           {
             "lang": "C#",
-            "source": "// Using HttpClient\nHttpClient client = new HttpClient();\nclient.DefaultRequestHeaders.Add(\"x-api-key\", \"<YOUR_API_KEY>\");\nclient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(\"Bearer\", \"<YOUR_JWT_TOKEN>\");\n\nvar response = await client.GetAsync($\"https://accounts.playbook3d.com/teams/{team_id}\");\nstring content = await response.Content.ReadAsStringAsync();\nConsole.WriteLine(response.StatusCode);\nConsole.WriteLine(content);"
+            "source": "// Using HttpClient\nHttpClient client = new HttpClient();\nclient.DefaultRequestHeaders.Add(\"x-api-key\", \"$X-API-KEY\");\nclient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(\"Bearer\", \"$JWT_TOKEN\");\n\nvar response = await client.GetAsync(\"$BASE_URL/teams/$TEAM_ID\");\nstring content = await response.Content.ReadAsStringAsync();\nConsole.WriteLine(response.StatusCode);\nConsole.WriteLine(content);"
           }
         ]
       }
-    },
+     },
     "/run_workflow/{team_id}/{run_id}": {
       "post": {
         "tags": ["run-workflow"],

@@ -893,10 +893,10 @@
                   },
                   "example": {
                     "workflow": {
-                      "id": "123e4567-e89b-12d3-a456-426614174000",
-                      "name": "Deleted Workflow",
+                      "id": "c5247e83-95ad-421f-b38c-f3c645a91de7",
+                      "name": "Customer Journey Analysis",
                       "status": "removed",
-                      "deleted_at": "2024-12-31T00:00:00Z"
+                      "deleted_at": "2025-02-15T08:42:17Z"
                     }
                   }
                 }
@@ -1005,22 +1005,22 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
-            "source": "curl -X DELETE \\\n  -H 'Authorization: Bearer $API_KEY' \\\n  -H 'Accept: application/json' \\\n  '$BASE_URL/workflows/$workflow_id'"
+            "source": "curl -X DELETE \\\n  -H 'Authorization: Bearer $JWT_TOKEN' \\\n  -H 'x-api-key: $X-API-KEY' \\\n  -H 'Accept: application/json' \\\n  '$BASE_URL/workflows/$WORKFLOW_ID'"
           },
           {
             "lang": "Python",
-            "source": "import requests\n\nheaders = {\n    'x-api-key': '<YOUR_API_KEY>',\n    'Authorization': 'Bearer <YOUR_JWT_TOKEN>',\n    'Accept': 'application/json'\n}\nresp = requests.delete(f\"https://example.com/workflows/{workflow_id}\", headers=headers)\nprint(resp.status_code, resp.text)"
+            "source": "import requests\n\nheaders = {\n    'x-api-key': '$X-API-KEY',\n    'Authorization': 'Bearer $JWT_TOKEN',\n    'Accept': 'application/json'\n}\nresp = requests.delete(f\"$BASE_URL/workflows/$WORKFLOW_ID\", headers=headers)\nprint(resp.status_code, resp.text)"
           },
           {
             "lang": "JavaScript",
-            "source": "fetch(`https://example.com/workflows/${workflow_id}`, {\n  method: 'DELETE',\n  headers: {\n    'x-api-key': '<YOUR_API_KEY>',\n    'Authorization': 'Bearer <YOUR_JWT_TOKEN>',\n    'Accept': 'application/json'\n  }\n}).then(async res => {\n  console.log(res.status);\n  console.log(await res.text());\n}).catch(err => console.error(err));"
+            "source": "fetch(`$BASE_URL/workflows/$WORKFLOW_ID`, {\n  method: 'DELETE',\n  headers: {\n    'x-api-key': '$X-API-KEY',\n    'Authorization': 'Bearer $JWT_TOKEN',\n    'Accept': 'application/json'\n  }\n}).then(async res => {\n  console.log(res.status);\n  console.log(await res.text());\n}).catch(err => console.error(err));"
           },
           {
             "lang": "C#",
-            "source": "// Using HttpClient\nHttpClient client = new HttpClient();\nclient.DefaultRequestHeaders.Add(\"x-api-key\", \"<YOUR_API_KEY>\");\nclient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(\"Bearer\", \"<YOUR_JWT_TOKEN>\");\n\nvar response = await client.DeleteAsync($\"https://example.com/workflows/{workflow_id}\");\nstring content = await response.Content.ReadAsStringAsync();\nConsole.WriteLine(response.StatusCode);\nConsole.WriteLine(content);"
+            "source": "// Using HttpClient\nHttpClient client = new HttpClient();\nclient.DefaultRequestHeaders.Add(\"x-api-key\", \"$X-API-KEY\");\nclient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(\"Bearer\", \"$JWT_TOKEN\");\n\nvar response = await client.DeleteAsync(\"$BASE_URL/workflows/$WORKFLOW_ID\");\nstring content = await response.Content.ReadAsStringAsync();\nConsole.WriteLine(response.StatusCode);\nConsole.WriteLine(content);"
           }
         ]
-      },
+       },
       "patch": {
         "tags": ["workflows"],
         "summary": "Update an Existing Workflow",

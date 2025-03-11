@@ -391,37 +391,129 @@
                     }
                   },
                   "example": {
-                    "run_id": "3fa85f64-5717-4752-b3fc-2c963f66aga6"
+                    "run_id": "c5247e83-95ad-421f-b38c-f3c645a91de7"
                   }
                 }
               }
             }
           },
           "401": {
-            "description": "Unauthorized. Check your API key or token."
+            "description": "Unauthorized. Check your API key or token.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "string",
+                      "description": "Unauthorized. Check your API key or token."
+                    }
+                  },
+                  "example": {
+                    "description": "Unauthorized. Check your API key or token."
+                  }
+                }
+              }
+            }
           },
           "402": {
-            "description": "Payment required. Subscription or plan issue."
+            "description": "Payment required. Subscription or plan issue.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "string",
+                      "description": "Payment required. Subscription or plan issue."
+                    }
+                  },
+                  "example": {
+                    "description": "Payment required. Subscription or plan issue."
+                  }
+                }
+              }
+            }
           },
           "403": {
-            "description": "Forbidden. You lack permission to perform this action."
+            "description": "Forbidden. You lack permission to perform this action.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "string",
+                      "description": "Forbidden. You lack permission to perform this action."
+                    }
+                  },
+                  "example": {
+                    "description": "Forbidden. You lack permission to perform this action."
+                  }
+                }
+              }
+            }
           },
           "404": {
-            "description": "Resource not found."
+            "description": "Resource not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "string",
+                      "description": "Resource not found."
+                    }
+                  },
+                  "example": {
+                    "description": "Resource not found."
+                  }
+                }
+              }
+            }
           },
           "500": {
-            "description": "Internal Server Error. Something went wrong on the server."
+            "description": "Internal Server Error. Something went wrong on the server.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "string",
+                      "description": "Internal Server Error. Something went wrong on the server."
+                    }
+                  },
+                  "example": {
+                    "description": "Internal Server Error. Something went wrong on the server."
+                  }
+                }
+              }
+            }
           }
         },
         "x-codeSamples": [
           {
             "lang": "cURL",
-            "source": "curl -X GET \\\n  -H 'Authorization: Bearer <YOUR_JWT>' \\\n  -H 'Accept: application/json' \\\n  'https://api.playbook3d.com/get_run_id'"
+            "source": "curl -X GET \\\n  -H 'Authorization: Bearer $JWT_TOKEN' \\\n  -H 'x-api-key: $X-API-KEY' \\\n  -H 'Accept: application/json' \\\n  '$BASE_URL/get_run_id'"
+          },
+          {
+            "lang": "Python",
+            "source": "import requests\n\nheaders = {\n    'x-api-key': '$X-API-KEY',\n    'Authorization': 'Bearer $JWT_TOKEN',\n    'Accept': 'application/json'\n}\n\nresp = requests.get('$BASE_URL/get_run_id', headers=headers)\nprint(resp.status_code, resp.json())"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "fetch('$BASE_URL/get_run_id', {\n  method: 'GET',\n  headers: {\n    'x-api-key': '$X-API-KEY',\n    'Authorization': 'Bearer $JWT_TOKEN',\n    'Accept': 'application/json'\n  }\n})\n.then(res => res.json())\n.then(data => console.log(data))\n.catch(err => console.error(err));"
+          },
+          {
+            "lang": "C#",
+            "source": "// Using HttpClient\nHttpClient client = new HttpClient();\nclient.DefaultRequestHeaders.Add(\"x-api-key\", \"$X-API-KEY\");\nclient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(\"Bearer\", \"$JWT_TOKEN\");\n\nvar response = await client.GetAsync(\"$BASE_URL/get_run_id\");\nstring content = await response.Content.ReadAsStringAsync();\nConsole.WriteLine(response.StatusCode);\nConsole.WriteLine(content);"
           }
         ]
       }
-    },
-    "/{run_id}/result": {
+     },
+     "/{run_id}/result": {
       "get": {
         "tags": ["runs"],
         "summary": "Get Run Result by Run ID",
@@ -471,7 +563,7 @@
                     }
                   },
                   "example": {
-                    "result": "https://signed-url.s3.amazonaws.com/..."
+                    "result": "https://example-storage.amazonaws.com/results/c5247e83-95ad-421f-b38c-f3c645a91de7?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=..."
                   }
                 }
               }
@@ -576,23 +668,23 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
-            "source": "curl -X GET \\\n  -H 'Authorization: Bearer $API_KEY' \\\n  -H 'Accept: application/json' \\\n  '$BASE_URL/workflows/$workflow_id'"
+            "source": "curl -X GET \\\n  -H 'Authorization: Bearer $JWT_TOKEN' \\\n  -H 'x-api-key: $X-API-KEY' \\\n  -H 'Accept: application/json' \\\n  '$BASE_URL/runs/$RUN_ID/result'"
           },
           {
             "lang": "Python",
-            "source": "import requests\n\nheaders = {\n    'x-api-key': '<YOUR_API_KEY>',\n    'Authorization': 'Bearer <YOUR_JWT_TOKEN>',\n    'Accept': 'application/json'\n}\nresp = requests.get('https://accounts.playbook3d.com/runs/<RUN_ID>/result', headers=headers)\nprint(resp.status_code, resp.json())"
+            "source": "import requests\n\nheaders = {\n    'x-api-key': '$X-API-KEY',\n    'Authorization': 'Bearer $JWT_TOKEN',\n    'Accept': 'application/json'\n}\nresp = requests.get('$BASE_URL/runs/$RUN_ID/result', headers=headers)\nprint(resp.status_code, resp.json())"
           },
           {
             "lang": "JavaScript",
-            "source": "fetch('https://accounts.playbook3d.com/runs/<RUN_ID>/result', {\n  method: 'GET',\n  headers: {\n    'x-api-key': '<YOUR_API_KEY>',\n    'Authorization': 'Bearer <YOUR_JWT_TOKEN>',\n    'Accept': 'application/json'\n  }\n}).then(res => res.json())\n  .then(data => console.log(data))\n  .catch(err => console.error(err));"
+            "source": "fetch('$BASE_URL/runs/$RUN_ID/result', {\n  method: 'GET',\n  headers: {\n    'x-api-key': '$X-API-KEY',\n    'Authorization': 'Bearer $JWT_TOKEN',\n    'Accept': 'application/json'\n  }\n}).then(res => res.json())\n  .then(data => console.log(data))\n  .catch(err => console.error(err));"
           },
           {
             "lang": "C#",
-            "source": "// Using HttpClient\nHttpClient client = new HttpClient();\nclient.DefaultRequestHeaders.Add(\"x-api-key\", \"<YOUR_API_KEY>\");\nclient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(\"Bearer\", \"<YOUR_JWT_TOKEN>\");\n\nvar response = await client.GetAsync(\"https://accounts.playbook3d.com/runs/<RUN_ID>/result\");\nstring content = await response.Content.ReadAsStringAsync();\nConsole.WriteLine(response.StatusCode);\nConsole.WriteLine(content);"
+            "source": "// Using HttpClient\nHttpClient client = new HttpClient();\nclient.DefaultRequestHeaders.Add(\"x-api-key\", \"$X-API-KEY\");\nclient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(\"Bearer\", \"$JWT_TOKEN\");\n\nvar response = await client.GetAsync(\"$BASE_URL/runs/$RUN_ID/result\");\nstring content = await response.Content.ReadAsStringAsync();\nConsole.WriteLine(response.StatusCode);\nConsole.WriteLine(content);"
           }
         ]
       }
-    },
+     },
     "/workflows/{workflow_id}": {
       "get": {
         "tags": ["workflows"],
@@ -994,9 +1086,9 @@
                   }
                 },
                 "example": {
-                  "name": "Updated Workflow #4",
-                  "team_id": "41480ee5-14ff-4f9e-89bf-91b0a8e50e77",
-                  "owner_id": "ab7dafe2-4f19-4570-bad0-a88e70ad2c11",
+                  "name": "Customer Journey Analysis",
+                  "team_id": "25974c31-28dd-45e0-93fb-82c7d409e358",
+                  "owner_id": "7631a8e2-509f-4d17-b5a2-e84bca57f1d6",
                   "is_external": false,
                   "canvas_type": 0
                 }
@@ -1014,7 +1106,7 @@
                   "properties": {
                     "id": {
                       "type": "string",
-                      "description": "The workflow’s UUID."
+                      "description": "The workflow's UUID."
                     },
                     "name": {
                       "type": "string",
@@ -1027,15 +1119,40 @@
                     "owner_id": {
                       "type": "string",
                       "description": "Current owner UUID after update (if changed)."
+                    },
+                    "editing_user_id": {
+                      "type": "string",
+                      "description": "UUID of the user currently editing the workflow."
+                    },
+                    "is_external": {
+                      "type": "boolean",
+                      "description": "Whether the workflow is external."
+                    },
+                    "canvas_type": {
+                      "type": "integer",
+                      "description": "Canvas type (0 for basic, etc.)."
+                    },
+                    "created_at": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "Timestamp when the workflow was created."
+                    },
+                    "updated_at": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "Timestamp when the workflow was last updated."
                     }
                   },
                   "example": {
-                    "id": "123e4567-e89b-12d3-a456-426614174000",
-                    "name": "Updated Workflow #4",
-                    "team_id": "41480ee5-14ff-4f9e-89bf-91b0a8e50e77",
-                    "owner_id": "ab7dafe2-4f19-4570-bad0-a88e70ad2c11",
+                    "id": "c5247e83-95ad-421f-b38c-f3c645a91de7",
+                    "name": "Customer Journey Analysis",
+                    "owner_id": "7631a8e2-509f-4d17-b5a2-e84bca57f1d6",
+                    "team_id": "25974c31-28dd-45e0-93fb-82c7d409e358",
+                    "editing_user_id": "7631a8e2-509f-4d17-b5a2-e84bca57f1d6",
+                    "is_external": false,
                     "canvas_type": 0,
-                    "is_external": false
+                    "created_at": "2025-01-15T14:37:22.451Z",
+                    "updated_at": "2025-01-15T16:23:45.892Z"
                   }
                 }
               }
@@ -1140,22 +1257,22 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
-            "source": "curl -X PATCH \\\n  -H 'Authorization: Bearer $API_KEY' \\\n  -H 'x-api-key: $API_KEY' \\\n  -H 'Content-Type: application/json' \\\n  -H 'Accept: application/json' \\\n  -d '{\"name\": \"Updated Workflow #4\", \"team_id\": \"41480ee5-14ff-4f9e-89bf-91b0a8e50e77\", \"owner_id\": \"ab7dafe2-4f19-4570-bad0-a88e70ad2c11\", \"is_external\": false, \"canvas_type\": 0}' \\\n  '$BASE_URL/workflows/$workflow_id'"
+            "source": "curl -X PATCH \\\n  -H 'Authorization: Bearer $JWT_TOKEN' \\\n  -H 'x-api-key: $X-API-KEY' \\\n  -H 'Content-Type: application/json' \\\n  -H 'Accept: application/json' \\\n  -d '{\"name\": \"Customer Journey Analysis\", \"team_id\": \"25974c31-28dd-45e0-93fb-82c7d409e358\", \"owner_id\": \"7631a8e2-509f-4d17-b5a2-e84bca57f1d6\", \"is_external\": false, \"canvas_type\": 0}' \\\n  '$BASE_URL/workflows/$WORKFLOW_ID'"
           },
           {
             "lang": "Python",
-            "source": "import requests\n\nheaders = {\n  'x-api-key': '<YOUR_API_KEY>',\n  'Authorization': 'Bearer <YOUR_JWT_TOKEN>',\n  'Content-Type': 'application/json',\n  'Accept': 'application/json'\n}\ndata = {\n  'name': 'Updated Workflow #4',\n  'team_id': '41480ee5-14ff-4f9e-89bf-91b0a8e50e77',\n  'owner_id': 'ab7dafe2-4f19-4570-bad0-a88e70ad2c11',\n  'is_external': False,\n  'canvas_type': 0\n}\n\nresp = requests.patch(f\"https://accounts.playbook3d.com/workflows/{{workflow_id}}\", json=data, headers=headers)\nprint(resp.status_code, resp.json())"
+            "source": "import requests\n\nheaders = {\n  'x-api-key': '$X-API-KEY',\n  'Authorization': 'Bearer $JWT_TOKEN',\n  'Content-Type': 'application/json',\n  'Accept': 'application/json'\n}\ndata = {\n  'name': 'Customer Journey Analysis',\n  'team_id': '25974c31-28dd-45e0-93fb-82c7d409e358',\n  'owner_id': '7631a8e2-509f-4d17-b5a2-e84bca57f1d6',\n  'is_external': False,\n  'canvas_type': 0\n}\n\nresp = requests.patch(f\"$BASE_URL/workflows/$WORKFLOW_ID\", json=data, headers=headers)\nprint(resp.status_code, resp.json())"
           },
           {
             "lang": "JavaScript",
-            "source": "fetch(`https://accounts.playbook3d.com/workflows/${workflow_id}`, {\n  method: 'PATCH',\n  headers: {\n    'x-api-key': '<YOUR_API_KEY>',\n    'Authorization': 'Bearer <YOUR_JWT_TOKEN>',\n    'Content-Type': 'application/json',\n    'Accept': 'application/json'\n  },\n  body: JSON.stringify({\n    name: 'Updated Workflow #4',\n    team_id: '41480ee5-14ff-4f9e-89bf-91b0a8e50e77',\n    owner_id: 'ab7dafe2-4f19-4570-bad0-a88e70ad2c11',\n    is_external: false,\n    canvas_type: 0\n  })\n})\n  .then(res => res.json())\n  .then(data => console.log(data))\n  .catch(err => console.error(err));"
+            "source": "fetch('$BASE_URL/workflows/$WORKFLOW_ID', {\n  method: 'PATCH',\n  headers: {\n    'x-api-key': '$X-API-KEY',\n    'Authorization': 'Bearer $JWT_TOKEN',\n    'Content-Type': 'application/json',\n    'Accept': 'application/json'\n  },\n  body: JSON.stringify({\n    name: 'Customer Journey Analysis',\n    team_id: '25974c31-28dd-45e0-93fb-82c7d409e358',\n    owner_id: '7631a8e2-509f-4d17-b5a2-e84bca57f1d6',\n    is_external: false,\n    canvas_type: 0\n  })\n})\n  .then(res => res.json())\n  .then(data => console.log(data))\n  .catch(err => console.error(err));"
           },
           {
             "lang": "C#",
-            "source": "// Using HttpClient\nHttpClient client = new HttpClient();\nclient.DefaultRequestHeaders.Add(\"x-api-key\", \"<YOUR_API_KEY>\");\nclient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(\"Bearer\", \"<YOUR_JWT_TOKEN>\");\n\nvar updateFields = new {\n    name = \"Updated Workflow #4\",\n    team_id = \"41480ee5-14ff-4f9e-89bf-91b0a8e50e77\",\n    owner_id = \"ab7dafe2-4f19-4570-bad0-a88e70ad2c11\",\n    is_external = false,\n    canvas_type = 0\n};\n\nvar content = new StringContent(\n    JsonConvert.SerializeObject(updateFields), Encoding.UTF8, \"application/json\");\nvar response = await client.PatchAsync($\"https://accounts.playbook3d.com/workflows/{workflow_id}\", content);\nstring respContent = await response.Content.ReadAsStringAsync();\nConsole.WriteLine(response.StatusCode);\nConsole.WriteLine(respContent);"
+            "source": "// Using HttpClient\nHttpClient client = new HttpClient();\nclient.DefaultRequestHeaders.Add(\"x-api-key\", \"$X-API-KEY\");\nclient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(\"Bearer\", \"$JWT_TOKEN\");\n\nvar updateFields = new {\n    name = \"Customer Journey Analysis\",\n    team_id = \"25974c31-28dd-45e0-93fb-82c7d409e358\",\n    owner_id = \"7631a8e2-509f-4d17-b5a2-e84bca57f1d6\",\n    is_external = false,\n    canvas_type = 0\n};\n\nvar content = new StringContent(\n    JsonConvert.SerializeObject(updateFields), Encoding.UTF8, \"application/json\");\nvar response = await client.PatchAsync(\"$BASE_URL/workflows/$WORKFLOW_ID\", content);\nstring respContent = await response.Content.ReadAsStringAsync();\nConsole.WriteLine(response.StatusCode);\nConsole.WriteLine(respContent);"
           }
         ]
-      }
+       }
     },
     "/cancel/{team_id}/{run_id}": {
       "post": {
@@ -1341,23 +1458,23 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
-            "source": "curl -X POST \\\n  -H 'Authorization: Bearer $JWT_TOKEN' \\\n  -H 'Accept: application/json' \\\n  '$BASE_URL/cancel/{TEAM_ID}/{RUN_ID}'"
+            "source": "curl -X POST \\\n  -H 'Authorization: Bearer $JWT_TOKEN' \\\n  -H 'x-api-key: $X-API-KEY' \\\n  -H 'Accept: application/json' \\\n  '$BASE_URL/cancel/$TEAM_ID/$RUN_ID'"
           },
           {
             "lang": "Python",
-            "source": "import requests\n\nheaders = {\n    'x-api-key': '<YOUR_API_KEY>',\n    'Authorization': 'Bearer <YOUR_JWT_TOKEN>',\n    'Accept': 'application/json'\n}\nresp = requests.post(\n    f\"https://example.com/cancel/{{TEAM_ID}}/{{RUN_ID}}\",\n    headers=headers\n)\nprint(resp.status_code, resp.json())"
+            "source": "import requests\n\nheaders = {\n    'x-api-key': '$X-API-KEY',\n    'Authorization': 'Bearer $JWT_TOKEN',\n    'Accept': 'application/json'\n}\nresp = requests.post(\n    f\"$BASE_URL/cancel/$TEAM_ID/$RUN_ID\",\n    headers=headers\n)\nprint(resp.status_code, resp.json())"
           },
           {
             "lang": "JavaScript",
-            "source": "fetch(`https://example.com/cancel/${TEAM_ID}/${RUN_ID}`, {\n  method: 'POST',\n  headers: {\n    'x-api-key': '<YOUR_API_KEY>',\n    'Authorization': 'Bearer <YOUR_JWT_TOKEN>',\n    'Accept': 'application/json'\n  }\n})\n.then(res => res.json())\n.then(data => console.log(data))\n.catch(err => console.error(err));"
+            "source": "fetch(`$BASE_URL/cancel/$TEAM_ID/$RUN_ID`, {\n  method: 'POST',\n  headers: {\n    'x-api-key': '$X-API-KEY',\n    'Authorization': 'Bearer $JWT_TOKEN',\n    'Accept': 'application/json'\n  }\n})\n.then(res => res.json())\n.then(data => console.log(data))\n.catch(err => console.error(err));"
           },
           {
             "lang": "C#",
-            "source": "// Using HttpClient\nHttpClient client = new HttpClient();\nclient.DefaultRequestHeaders.Add(\"x-api-key\", \"<YOUR_API_KEY>\");\nclient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(\"Bearer\", \"<YOUR_JWT_TOKEN>\");\n\nvar response = await client.PostAsync(\"https://example.com/cancel/{TEAM_ID}/{RUN_ID}\", null);\nstring content = await response.Content.ReadAsStringAsync();\nConsole.WriteLine(response.StatusCode);\nConsole.WriteLine(content);"
+            "source": "// Using HttpClient\nHttpClient client = new HttpClient();\nclient.DefaultRequestHeaders.Add(\"x-api-key\", \"$X-API-KEY\");\nclient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(\"Bearer\", \"$JWT_TOKEN\");\n\nvar response = await client.PostAsync(\"$BASE_URL/cancel/$TEAM_ID/$RUN_ID\", null);\nstring content = await response.Content.ReadAsStringAsync();\nConsole.WriteLine(response.StatusCode);\nConsole.WriteLine(content);"
           }
         ]
       }
-    },
+     },
     "/workflows": {
       "get": {
         "tags": ["workflows"],

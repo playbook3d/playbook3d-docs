@@ -729,19 +729,65 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "workflow": {
-                      "type": "object",
-                      "description": "A JSON object representing the found workflow."
+                    "id": {
+                      "type": "string",
+                      "description": "The workflow's unique UUID."
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "The name of the workflow."
+                    },
+                    "owner_id": {
+                      "type": "string",
+                      "description": "UUID of the workflow owner."
+                    },
+                    "team_id": {
+                      "type": "string",
+                      "description": "UUID of the team this workflow belongs to."
+                    },
+                    "editing_user_id": {
+                      "type": "string",
+                      "description": "UUID of the user currently editing the workflow."
+                    },
+                    "is_external": {
+                      "type": "boolean",
+                      "description": "Whether the workflow is external."
+                    },
+                    "canvas_type": {
+                      "type": "integer",
+                      "description": "Type of canvas used for the workflow."
+                    },
+                    "public": {
+                      "type": "boolean",
+                      "description": "Whether the workflow is public."
+                    },
+                    "created_at": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "Timestamp when the workflow was created."
+                    },
+                    "updated_at": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "Timestamp when the workflow was last updated."
                     }
                   },
                   "example": {
-                    "workflow": {
-                      "id": "123e4567-e89b-12d3-a456-426614174000",
-                      "name": "Example Workflow",
-                      "team_id": "41480ee5-14ff-4f9e-89bf-91b0a8e50e77",
-                      "canvas_type": 0,
-                      "created_at": "2025-01-02T10:00:00Z"
-                    }
+                    "id": "c5247e83-95ad-421f-b38c-f3c645a91de7",
+                    "name": "Customer Journey Analysis",
+                    "owner_id": "7631a8e2-509f-4d17-b5a2-e84bca57f1d6",
+                    "team_id": "25974c31-28dd-45e0-93fb-82c7d409e358",
+                    "editing_user_id": "7631a8e2-509f-4d17-b5a2-e84bca57f1d6",
+                    "last_edited": null,
+                    "workflow_url": "",
+                    "workflow_api_url": "",
+                    "is_external": false,
+                    "s3_file_id": "41ce3fb7-d572-49a8-82c4-ae53f819cd35",
+                    "canvas_type": 0,
+                    "public_url": "",
+                    "public": true,
+                    "created_at": "2025-01-15T14:37:22.451Z",
+                    "updated_at": "2025-01-15T16:23:45.892Z"
                   }
                 }
               }
@@ -827,22 +873,22 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
-            "source": "curl -X GET \\\n  -H 'Authorization: Bearer $API_KEY' \\\n  -H 'Accept: application/json' \\\n  '$BASE_URL/workflows/$workflow_id'"
+            "source": "curl -X GET \\\n  -H 'Authorization: Bearer $JWT_TOKEN' \\\n  -H 'x-api-key: $X-API-KEY' \\\n  -H 'Accept: application/json' \\\n  '$BASE_URL/workflows/$WORKFLOW_ID'"
           },
           {
             "lang": "Python",
-            "source": "import requests\n\nheaders = {\n    'x-api-key': '<YOUR_API_KEY>',\n    'Authorization': 'Bearer <YOUR_JWT_TOKEN>',\n    'Accept': 'application/json'\n}\nresp = requests.get(f\"https://example.com/workflows/{{workflow_id}}\", headers=headers)\nprint(resp.status_code, resp.json())"
+            "source": "import requests\n\nheaders = {\n    'x-api-key': '$X-API-KEY',\n    'Authorization': 'Bearer $JWT_TOKEN',\n    'Accept': 'application/json'\n}\nresp = requests.get(f\"$BASE_URL/workflows/$WORKFLOW_ID\", headers=headers)\nprint(resp.status_code, resp.json())"
           },
           {
             "lang": "JavaScript",
-            "source": "fetch(`https://example.com/workflows/${workflow_id}`, {\n  method: 'GET',\n  headers: {\n    'x-api-key': '<YOUR_API_KEY>',\n    'Authorization': 'Bearer <YOUR_JWT_TOKEN>',\n    'Accept': 'application/json'\n  }\n}).then(res => res.json())\n  .then(data => console.log(data))\n  .catch(err => console.error(err));"
+            "source": "fetch(`$BASE_URL/workflows/$WORKFLOW_ID`, {\n  method: 'GET',\n  headers: {\n    'x-api-key': '$X-API-KEY',\n    'Authorization': 'Bearer $JWT_TOKEN',\n    'Accept': 'application/json'\n  }\n}).then(res => res.json())\n  .then(data => console.log(data))\n  .catch(err => console.error(err));"
           },
           {
             "lang": "C#",
-            "source": "// Using HttpClient\nHttpClient client = new HttpClient();\nclient.DefaultRequestHeaders.Add(\"x-api-key\", \"<YOUR_API_KEY>\");\nclient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(\"Bearer\", \"<YOUR_JWT_TOKEN>\");\n\nvar response = await client.GetAsync($\"https://example.com/workflows/{workflow_id}\");\nstring content = await response.Content.ReadAsStringAsync();\nConsole.WriteLine(response.StatusCode);\nConsole.WriteLine(content);"
+            "source": "// Using HttpClient\nHttpClient client = new HttpClient();\nclient.DefaultRequestHeaders.Add(\"x-api-key\", \"$X-API-KEY\");\nclient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(\"Bearer\", \"$JWT_TOKEN\");\n\nvar response = await client.GetAsync(\"$BASE_URL/workflows/$WORKFLOW_ID\");\nstring content = await response.Content.ReadAsStringAsync();\nConsole.WriteLine(response.StatusCode);\nConsole.WriteLine(content);"
           }
         ]
-      },
+       },
       "delete": {
         "tags": ["workflows"],
         "summary": "Delete Workflow by ID",

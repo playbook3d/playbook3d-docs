@@ -69,7 +69,7 @@
       "pages": [
         "platform/get-started/introduction",
         "platform/get-started/subscription-plans",
-        "platform/get-started/collaboration-sharing"
+        "platform/get-started/collaboration-sharing",
         "platform/get-started/import-comfyui"
       ]
     },

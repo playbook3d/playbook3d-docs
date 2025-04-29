@@ -136,7 +136,7 @@
     },
     {
       "group": "Import ComfyUI Workflow",
-      ]
+      "pages": ["comfyui-nodes/overview"]
     }
   ],
   "footerSocials": {

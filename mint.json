@@ -47,7 +47,7 @@
       "url": "api-reference"
     },
     {
-      "name": "Import ComfyUI Workflow",
+      "name": "Import ComfyUI",
       "url": "comfyui-nodes"
     }
   ],
@@ -131,13 +131,9 @@
       ]
      },
     {
-      "group": "Get Started",
+      "group": "Import ComfyUI",
       "pages": ["comfyui-nodes/overview"]
     },
-    {
-      "group": "Import ComfyUI Workflow",
-      "pages": ["comfyui-nodes/overview"]
-    }
   ],
   "footerSocials": {
     "x": "https://x.com/playbook3d",

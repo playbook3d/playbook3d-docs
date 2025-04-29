@@ -2,13 +2,13 @@
 title: "Import ComfyUI Workflow"
 ---
 
-[Work in Progress] Playbook supports importing ComfyUI workflows as long as they comprise of our supported node list. 
+You can import ComfyUI workflows (.json) into Playbook so long as it is comprised of our whitelisted list of nodes. When you import a ComfyUI workflow, it is converted to a Playbook workflow and any further changes made to the original file in ComfyUI will not be reflected in Playbook.
 
 <Info>
-  Supports ComfyUI version: **v0.0.29**
+  Supports ComfyUI version: **v0.0.30**
 </Info>
 
-### Supported Nodes
+## Supported Nodes
 
 - ComfyCore Nodes
 - https://github.com/ssitu/ComfyUI_UltimateSDUpscale
@@ -28,8 +28,29 @@ title: "Import ComfyUI Workflow"
 - https://github.com/BadCafeCode/masquerade-nodes-comfyui
 - https://github.com/city96/ComfyUI-GGUF
 
-## Tips for configuring a workflow for API
+<Info>
+  \*\*Missing a node? \*\*Reach out to [**_support@playbook3d.com_**](mailto:support@playbook3d.com)
+</Info>
+
+## Tips for configuring your ComfyUI workflow for import
 
 1. Comment out all preview or output nodes that you do not want outputted
 2. Do not use `GET` or `SET` nodes
 3. Ensure all necessary connections are made
+
+## Importing
+
+<Steps>
+  <Step title="From the Home page, click Create > Import at the top-right of the page.">
+    ![Comfy UI Import Pn](/images/ComfyUIImport.png)
+  </Step>
+  <Step title="Click From your computer.">
+    
+  </Step>
+  <Step title="Select the ComfyUI workflow file you want to import and click Open. Depending on the file size, the import process may take a few moments." titleSize="p">
+    
+  </Step>
+  <Step title="Click Done">
+    
+  </Step>
+</Steps>

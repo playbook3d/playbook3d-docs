@@ -1,0 +1,59 @@
+---
+title: "Import ComfyUI Workflow"
+---
+
+You can import ComfyUI workflows (.json) into Playbook so long as it is comprised of our whitelisted list of nodes. When you import a ComfyUI workflow, it is converted to a Playbook workflow and any further changes made to the original file in ComfyUI will not be reflected in Playbook.
+
+<Info>
+  Supports ComfyUI version: **v0.0.30**
+</Info>
+
+## Supported Nodes
+
+- ComfyCore Nodes
+- https://github.com/ssitu/ComfyUI_UltimateSDUpscale
+- https://github.com/ltdrdata/ComfyUI-Impact-Pack
+- https://github.com/WASasquatch/was-node-suite-comfyui
+- https://github.com/XLabs-AI/x-flux-comfyui
+- https://github.com/Fannovel16/comfyui_controlnet_aux
+- https://github.com/ltdrdata/ComfyUI-Impact-Subpack
+- https://github.com/kijai/ComfyUI-KJNodes
+- https://github.com/cubiq/ComfyUI_essentials
+- https://github.com/rgthree/rgthree-comfy
+- https://github.com/ltdrdata/ComfyUI-Inspire-Pack
+- https://github.com/Kosinkadink/ComfyUI-Advanced-ControlNet
+- https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite
+- https://github.com/Fannovel16/ComfyUI-Frame-Interpolation
+- https://github.com/cubiq/ComfyUI_IPAdapter_plus
+- https://github.com/BadCafeCode/masquerade-nodes-comfyui
+- https://github.com/city96/ComfyUI-GGUF
+
+<Info>
+  \*\*Missing a node? \*\*Reach out to [**_support@playbook3d.com_**](mailto:support@playbook3d.com)
+</Info>
+
+## Tips for configuring your ComfyUI workflow for import
+
+1. Comment out all preview or output nodes that you do not want outputted
+2. Do not use `GET` or `SET` nodes
+3. Ensure all necessary connections are made
+
+## Importing ComfyUI nodes
+
+<Steps>
+  <Step title="From the Home page, click Create > Import at the top-right of the page.">
+    ![Comfy UI Import Pn](/images/ComfyUIImport.png)
+  </Step>
+  <Step title="Click From your computer.">
+    
+  </Step>
+  <Step title="Select the ComfyUI workflow file you want to import and click Open. Depending on the file size, the import process may take a few moments." titleSize="p">
+    
+  </Step>
+  <Step title="Select which ComfyUI inputs to expose in the UI Playground">
+    ![Comfy UI Import Selection](/ComfyUIInputSelection.png)
+  </Step>
+  <Step title="Click Confirm">
+    
+  </Step>
+</Steps>

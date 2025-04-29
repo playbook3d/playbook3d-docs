@@ -47,8 +47,8 @@
       "url": "api-reference"
     },
     {
-      "name": "ComfyUI Nodes",
-      "url": "comfyui-nodes"
+      "name": "Import ComfyUI Workflow",
+      "url": "import-comfyui"
     }
   ],
   "anchors": [

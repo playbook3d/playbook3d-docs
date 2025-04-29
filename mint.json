@@ -70,6 +70,7 @@
         "platform/get-started/introduction",
         "platform/get-started/subscription-plans",
         "platform/get-started/collaboration-sharing"
+        "platform/get-started/import-comfyui"
       ]
     },
     {
@@ -130,10 +131,6 @@
         "api-reference/uploads/post-video"
       ]
      },
-    {
-      "group": "Import ComfyUI",
-      "pages": ["comfyui-nodes/overview"]
-    },
   ],
   "footerSocials": {
     "x": "https://x.com/playbook3d",

@@ -101,7 +101,8 @@
     {
       "group": "Teams",
       "pages": [
-        "api-reference/teams/get-teams"
+        "api-reference/teams/get-teams",
+        "api-reference/teams/get-teams-team-id"
       ]
     },
     {
